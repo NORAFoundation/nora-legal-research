@@ -1,14 +1,22 @@
 # Publication Review — nora-legal-research
 
-**Status: PASS**
+**Status: BLOCKED**
 
 This review is fail-closed. A scaffold cannot pass it merely because required files exist.
 
 ## Result
 
-- All required publication gates are PASS and carry evidence.
-- Recorded migrated units have passing privacy/secret/license reviews.
-- Required public files are present.
-- No obvious sensitive-file path was detected by the lightweight current-tree scan.
+- G0 identity, G1 technical validation (doctor/validate/test 7 passed, demo PASS), G2 docs,
+  G3/G4 privacy/secret scans, G6 contributor readiness: PASS with evidence (2026-08-20).
+- G5 licensing/provenance: LICENSE + SOURCE_PROVENANCE.yaml present, but formal external
+  rights review still recorded as `pending_formal_rights_review`.
+- G7 remote CI/security: ci workflow PASS on pushed main; codeql SARIF upload BLOCKED
+  ("Advanced Security must be enabled for this repository to use code scanning" — GitHub
+  Advanced Security not available for private repos on GitHub Free); branch protection/
+  rulesets API 403 on GitHub Free private org. Features unlock at public visibility switch.
 
-Full-history scanner output referenced in PUBLICATION_EVIDENCE.yaml remains the authoritative evidence for history gates.
+Full evidence and run IDs in PUBLICATION_EVIDENCE.yaml (authoritative).
+
+**Not publishable until: (1) formal rights review completes, (2) codeql/security features
+are enabled or confirmed available post-visibility switch, and (3) explicit visibility
+decision is made.**
