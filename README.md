@@ -28,9 +28,12 @@ search authority -> validate citation -> verify quote span -> classify authority
 ## Quick start
 
 ```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"
 make doctor
 make validate
 make test
+python examples/demo.py
 ```
 
 ## Source provenance
