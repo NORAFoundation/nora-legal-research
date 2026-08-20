@@ -1,0 +1,21 @@
+name: Research / Benchmark
+description: A measurable technical research question
+title: "[research] "
+labels: ["research"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Research question
+    validations:
+      required: true
+  - type: textarea
+    id: baseline
+    attributes:
+      label: Baseline / current evidence
+  - type: textarea
+    id: metric
+    attributes:
+      label: Proposed metric or falsification test
+    validations:
+      required: true
