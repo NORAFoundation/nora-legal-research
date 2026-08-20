@@ -7,6 +7,11 @@ entries:
       paths:
         - src/assurance/citation_guard.py
         - src/assurance/quote_verifier.py
+    rights_basis:
+      copyright_owner: NORA Foundation
+      relicensing_authorized_by: NORA Steering Committee
+      authorization_date: 2026-08-19
+      notes: "Internal MIT-licensed NORA repository imported into unified nora-legal-research."
     origin_status: nora-authored
     original_license: MIT
     target:
@@ -29,6 +34,11 @@ entries:
       commit: 4659b902
       paths:
         - ingest/courtlistener_bulk.py
+    rights_basis:
+      copyright_owner: NORA Foundation
+      relicensing_authorized_by: NORA Steering Committee
+      authorization_date: 2026-08-19
+      notes: "Internal NORA-authored scaffold cleanroom rewritten for OSS release under Apache-2.0."
     origin_status: nora-authored
     original_license: Missing/Unknown
     target:
