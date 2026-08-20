@@ -23,3 +23,24 @@ entries:
       privacy_scan: pass
       license_review: pass
       reviewer: migration-agent
+  - id: PROV-LEGAL-002
+    source:
+      repository: NORAFoundation/nora-legal-research-scaffold-v0-3-0
+      commit: 4659b902
+      paths:
+        - ingest/courtlistener_bulk.py
+    origin_status: nora-authored
+    original_license: Missing/Unknown
+    target:
+      repository: NORAFoundation/nora-legal-research
+      paths:
+        - src/nora_legal_research/courtlistener.py
+    treatment: CONCEPT_REWRITE
+    changes:
+      - Clean-room reimplementation of CourtListener bulk opinion normalization
+      - Eliminated competing duplicate research engine
+    review:
+      secret_scan: pass
+      privacy_scan: pass
+      license_review: pass
+      reviewer: migration-agent
