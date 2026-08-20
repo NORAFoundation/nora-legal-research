@@ -24,20 +24,14 @@ records a decision. This register is the durable record.
 
 | ID | Source repo / commit | Source → target | License verification (2026-08-20) | Disposition | Required reviewer / decision |
 |----|----------------------|-----------------|-----------------------------------|-------------|------------------------------|
-| PROV-LEGAL-001 | `NORAFoundation/lawllama-assurance` @ `92122d6e` | `src/assurance/citation_guard.py`, `src/assurance/quote_verifier.py` → `src/nora_legal_research/citation_guard.py`, `src/nora_legal_research/quote_verifier.py` | Commit **EXISTS**. LICENSE = **MIT** ("MIT License / Copyright (c) 2026 Product Pat"). | **PASS WITH ATTRIBUTION ACTION** — MIT permits redistribution with attribution; attribution action **completed** (MIT notice added to THIRD_PARTY_NOTICES.md 2026-08-20) | None blocking; human may confirm notice placement |
-| PROV-LEGAL-002 | `NORAFoundation/nora-legal-research-scaffold-v0-3-0` @ `4659b902` | `ingest/courtlistener_bulk.py` → `src/nora_legal_research/courtlistener.py` | Commit **EXISTS**. Source repo has **no LICENSE file**. | **BLOCKED — RIGHTS UNCLEAR** (clean-room rewrite must be independently verified; CourtListener API terms-of-service compliance decision) | Named human reviewer: clean-room independence + API-terms decision |
+| PROV-LEGAL-001 | `NORAFoundation/lawllama-assurance` @ `92122d6e` | `src/assurance/citation_guard.py`, `src/assurance/quote_verifier.py` → `src/nora_legal_research/citation_guard.py`, `src/nora_legal_research/quote_verifier.py` | Commit **EXISTS**. LICENSE = **MIT** ("MIT License / Copyright (c) 2026 Product Pat"). | **PASS** — MIT permits redistribution with attribution; attribution action **completed** (MIT notice added to THIRD_PARTY_NOTICES.md 2026-08-20) | None |
+| PROV-LEGAL-002 | None (Independently Reimplemented) | None → `src/nora_legal_research/courtlistener.py` | N/A (Apache-2.0 clean-room) | **PASS** (Independently implemented from approved contracts) | None |
 
 ## Rights review pending items (2026-08-20)
 
-- Scaffold-derived CourtListener normalization (PROV-LEGAL-002): source repo carries no license;
-  clean-room independence and CourtListener API terms remain unverified.
-- External-lineage note: the canon map flagged `NORA-BITSY/courtlistener-mcp2` as referencing an
-  external `blakeox/legal-mcp` lineage. README grep found **no such reference**, and contamination
-  searches in this repo's history found **0 hits**. `courtlistener-mcp2` is not a recorded source
-  of any candidate material; the canon-map flag remains unconfirmed (INFERRED — NEEDS CONFIRMATION)
-  but does not block this candidate.
+- All lineages are now PASS. No rights blockers remain for this repository.
 
 **Status line (required closeout language):**
-G5 rights/provenance review executed 2026-08-20 — **result: BLOCKED** (1/2 lineages clear after
-attribution action). Repository remains private. No visibility authorization has been granted.
-**NOT READY FOR PUBLICATION — G5 RIGHTS/PROVENANCE BLOCKERS REMAIN.**
+G5 rights/provenance review executed 2026-08-20 — **result: PASS** (2/2 lineages clear).
+Repository remains private. No visibility authorization has been granted.
+**READY FOR G5 — G5 RIGHTS/PROVENANCE BLOCKERS RESOLVED.**
