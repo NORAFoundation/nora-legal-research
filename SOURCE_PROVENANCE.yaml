@@ -1,56 +1,57 @@
 version: 1.0.0
 entries:
-  - id: PROV-LEGAL-001
-    source:
-      repository: NORAFoundation/lawllama-assurance
-      commit: 92122d6e
-      paths:
-        - src/assurance/citation_guard.py
-        - src/assurance/quote_verifier.py
-    rights_basis:
-      copyright_owner: NORA Foundation
-      relicensing_authorized_by: NORA Steering Committee
-      authorization_date: 2026-08-19
-      notes: "Internal MIT-licensed NORA repository imported into unified nora-legal-research."
-    origin_status: nora-authored
-    original_license: MIT
-    target:
-      repository: NORAFoundation/nora-legal-research
-      paths:
-        - src/nora_legal_research/citation_guard.py
-        - src/nora_legal_research/quote_verifier.py
-    treatment: PRIMARY_REBUILD_SOURCE
-    changes:
-      - Harvested citation guard and quote span verification modules into unified nora-legal-research
-      - Preserved MIT copyright attribution
-    review:
-      secret_scan: pass
-      privacy_scan: pass
-      license_review: pass
-      reviewer: migration-agent
-  - id: PROV-LEGAL-002
-    source:
-      repository: NORAFoundation/nora-legal-research-scaffold-v0-3-0
-      commit: 4659b902
-      paths:
-        - ingest/courtlistener_bulk.py
-    rights_basis:
-      copyright_owner: NORA Foundation
-      relicensing_authorized_by: NORA Steering Committee
-      authorization_date: 2026-08-19
-      notes: "Internal NORA-authored scaffold cleanroom rewritten for OSS release under Apache-2.0."
-    origin_status: nora-authored
-    original_license: Missing/Unknown
-    target:
-      repository: NORAFoundation/nora-legal-research
-      paths:
-        - src/nora_legal_research/courtlistener.py
-    treatment: CONCEPT_REWRITE
-    changes:
-      - Clean-room reimplementation of CourtListener bulk opinion normalization
-      - Eliminated competing duplicate research engine
-    review:
-      secret_scan: pass
-      privacy_scan: pass
-      license_review: pass
-      reviewer: migration-agent
+- id: PROV-LEGAL-001
+  source:
+    repository: NORAFoundation/lawllama-assurance
+    commit: 92122d6e
+    paths:
+    - src/assurance/citation_guard.py
+    - src/assurance/quote_verifier.py
+  rights_basis:
+    copyright_owner: NORA Foundation
+    notes: Internal MIT-licensed NORA repository imported into unified nora-legal-research.
+    relicensing_status: pending_formal_rights_review
+    authorization_reference: INTERNAL_CLEANROOM_TRANSPLANT_PENDING_EXPLICIT_SIGN_OFF
+  origin_status: nora-authored
+  original_license: MIT
+  target:
+    repository: NORAFoundation/nora-legal-research
+    paths:
+    - src/nora_legal_research/citation_guard.py
+    - src/nora_legal_research/quote_verifier.py
+  treatment: PRIMARY_REBUILD_SOURCE
+  changes:
+  - Harvested citation guard and quote span verification modules into unified nora-legal-research
+  - Preserved MIT copyright attribution
+  review:
+    secret_scan: pass
+    privacy_scan: pass
+    license_review: pass
+    reviewer: migration-agent
+- id: PROV-LEGAL-002
+  source:
+    repository: NORAFoundation/nora-legal-research-scaffold-v0-3-0
+    commit: 4659b902
+    paths:
+    - ingest/courtlistener_bulk.py
+  rights_basis:
+    copyright_owner: NORA Foundation
+    notes: Internal NORA-authored scaffold cleanroom rewritten for OSS release under
+      Apache-2.0.
+    relicensing_status: pending_formal_rights_review
+    authorization_reference: INTERNAL_CLEANROOM_TRANSPLANT_PENDING_EXPLICIT_SIGN_OFF
+  origin_status: nora-authored
+  original_license: Missing/Unknown
+  target:
+    repository: NORAFoundation/nora-legal-research
+    paths:
+    - src/nora_legal_research/courtlistener.py
+  treatment: CONCEPT_REWRITE
+  changes:
+  - Clean-room reimplementation of CourtListener bulk opinion normalization
+  - Eliminated competing duplicate research engine
+  review:
+    secret_scan: pass
+    privacy_scan: pass
+    license_review: pass
+    reviewer: migration-agent
