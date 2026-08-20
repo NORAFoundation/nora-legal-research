@@ -1,0 +1,39 @@
+schema_version: 1
+target: "nora-legal-research"
+gates:
+  clean_target_identity:
+    status: pending
+    evidence: []
+  working_tree_privacy_scan:
+    status: pending
+    evidence: []
+  git_history_privacy_scan:
+    status: pending
+    evidence: []
+  working_tree_secret_scan:
+    status: pending
+    evidence: []
+  git_history_secret_scan:
+    status: pending
+    evidence: []
+  license_review:
+    status: pending
+    evidence: []
+  provenance_review:
+    status: pending
+    evidence: []
+  technical_validation:
+    status: pending
+    evidence: []
+  current_state_claim_review:
+    status: pending
+    evidence: []
+  contributor_readiness:
+    status: pending
+    evidence: []
+  remote_ci:
+    status: pending
+    evidence: []
+  remote_security_configuration:
+    status: pending
+    evidence: []
