@@ -1,11 +1,11 @@
 # Current State — nora-legal-research
 
-**Status:** IMPLEMENTED (Minimum Vertical Slice Verified)  
-**Version:** 0.0.1  
+**Status:** OSS EXTRACTION / RECONCILIATION IN PROGRESS
+**Version:** 0.0.1
 
-## Implemented Vertical Slice
+## Implemented Reference Slice
 
-The required minimum vertical slice is complete and verified:
+The minimum reference vertical slice is complete and verified:
 `citation parsing -> CourtListener normalization -> quote verification -> ResearchSnapshot generation -> treatment auditing`
 
 - `src/nora_legal_research/contracts.py`: Dataclasses for `Jurisdiction`, `AuthorityType`, `PrecedentialStatus`, `Citation`, `QuoteSpan`, and `ResearchSnapshot`.
@@ -14,7 +14,15 @@ The required minimum vertical slice is complete and verified:
 - `src/nora_legal_research/courtlistener.py`: `CourtListenerNormalizer` mapping raw API payloads into canonical authority citations.
 - `src/nora_legal_research/treatment.py`: `TreatmentAnalyzer` auditing adverse authority and generating overruled status warnings.
 
-## Verification Evidence
+## Verified
 
 - `make test` / `pytest`: **7 passed in 0.11s**.
-- Full end-to-end citation parsing, quote verification, CourtListener normalization, and treatment trace verified in `tests/test_vertical_slice.py`.
+- Vertical-slice test path: `tests/test_vertical_slice.py`.
+- End-to-end citation parsing, quote verification, CourtListener normalization, and treatment trace verified.
+
+## Not Yet Established
+
+- canonical feature parity (public candidate contains 163 LOC vs canonical `legal-core` 5,556 LOC);
+- public extraction completeness;
+- production deployment status;
+- reconciliation of full entity resolution, relational sync, and bulk CourtListener importers.
