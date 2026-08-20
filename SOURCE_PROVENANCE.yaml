@@ -1,2 +1,25 @@
-version: '1.0'
-entries: []
+version: 1.0.0
+entries:
+  - id: PROV-LEGAL-001
+    source:
+      repository: NORAFoundation/lawllama-assurance
+      commit: 92122d6e
+      paths:
+        - src/assurance/citation_guard.py
+        - src/assurance/quote_verifier.py
+    origin_status: nora-authored
+    original_license: MIT
+    target:
+      repository: NORAFoundation/nora-legal-research
+      paths:
+        - src/nora_legal_research/citation_guard.py
+        - src/nora_legal_research/quote_verifier.py
+    treatment: PRIMARY_REBUILD_SOURCE
+    changes:
+      - Harvested citation guard and quote span verification modules into unified nora-legal-research
+      - Preserved MIT copyright attribution
+    review:
+      secret_scan: pass
+      privacy_scan: pass
+      license_review: pass
+      reviewer: migration-agent
