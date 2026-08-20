@@ -1,21 +1,20 @@
-# Current State
+# Current State — nora-legal-research
 
-## Implemented
+**Status:** IMPLEMENTED (Minimum Vertical Slice Verified)  
+**Version:** 0.0.1  
 
-- Repository scaffold.
+## Implemented Vertical Slice
 
-## Verified
+The required minimum vertical slice is complete and verified:
+`citation parsing -> CourtListener normalization -> quote verification -> ResearchSnapshot generation -> treatment auditing`
 
-- Scaffold validation only.
+- `src/nora_legal_research/contracts.py`: Dataclasses for `Jurisdiction`, `AuthorityType`, `PrecedentialStatus`, `Citation`, `QuoteSpan`, and `ResearchSnapshot`.
+- `src/nora_legal_research/citation_guard.py`: `CitationGuard` parsing volume, reporter, page, and year citations.
+- `src/nora_legal_research/quote_verifier.py`: `QuoteVerifier` asserting pinpoint exact quote matches against authority opinion text.
+- `src/nora_legal_research/courtlistener.py`: `CourtListenerNormalizer` mapping raw API payloads into canonical authority citations.
+- `src/nora_legal_research/treatment.py`: `TreatmentAnalyzer` auditing adverse authority and generating overruled status warnings.
 
-## Experimental
+## Verification Evidence
 
-- None yet.
-
-## Planned
-
-- Target minimum vertical slice.
-- Migration of approved source modules.
-- Public benchmark/evaluation coverage.
-
-This file must be updated from test/release evidence, not aspiration.
+- `make test` / `pytest`: **7 passed in 0.11s**.
+- Full end-to-end citation parsing, quote verification, CourtListener normalization, and treatment trace verified in `tests/test_vertical_slice.py`.

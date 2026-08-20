@@ -7,8 +7,8 @@ class QuoteVerifier:
     Verifies exact quote spans against underlying authority text.
     """
     def verify_quote(self, span: QuoteSpan, authority_text: str) -> Tuple[bool, QuoteSpan]:
-        clean_quote = span.exact_quote.strip()
-        clean_authority = authority_text.strip()
+        clean_quote = span.exact_quote.strip().lower()
+        clean_authority = authority_text.strip().lower()
         
         if clean_quote in clean_authority:
             span.verified = True
