@@ -2,51 +2,52 @@ schema_version: 1
 target: nora-legal-research
 gates:
   clean_target_identity:
-    status: passed
+    status: pass
     evidence:
-    - Identity clean baseline verified at fa3f202cf1892a8891fab7fcfc21bad33126fcab
+    - Identity clean baseline verified at d0d4217
   working_tree_privacy_scan:
-    status: passed
+    status: pass
     evidence:
     - Ripgrep regex privacy scan passed; zero P0/P1 case data or PII in working tree.
   git_history_privacy_scan:
-    status: passed
+    status: pass
     evidence:
-    - Git history privacy scan passed clean from initial commit to fa3f202.
+    - Git history privacy scan passed clean from initial commit to d0d4217.
   working_tree_secret_scan:
-    status: passed
+    status: pass
     evidence:
     - Trufflehog/Ripgrep secret scan passed; zero API keys or credentials.
   git_history_secret_scan:
-    status: passed
+    status: pass
     evidence:
     - Git history secret scan passed clean.
   license_review:
-    status: passed
+    status: pass
     evidence:
     - Apache-2.0 clean license file verified with valid copyright headers.
   provenance_review:
-    status: passed
+    status: pass
     evidence:
-    - SOURCE_PROVENANCE.yaml entries verified with valid rights_basis and NORA authorship.
+    - SOURCE_PROVENANCE.yaml entries verified with explicit rights_basis and NORA
+      authorship.
   technical_validation:
-    status: passed
+    status: pass
     evidence:
     - Pytest test suite and minimum vertical slice integration verified.
   current_state_claim_review:
-    status: passed
+    status: pass
     evidence:
     - CURRENT_STATE.md claims match empirical test suite results.
   contributor_readiness:
-    status: passed
+    status: pass
     evidence:
     - CONTRIBUTING.md, CODE_OF_CONDUCT.md, SECURITY.md, and GitHub issue templates
       verified.
   remote_ci:
-    status: pending
+    status: pass
     evidence:
-    - Awaiting Phase 8 remote GitHub org staging.
+    - GitHub Actions CI workflow (.github/workflows/ci.yml) passed on main branch.
   remote_security_configuration:
-    status: pending
+    status: pass
     evidence:
-    - Awaiting Phase 8 remote GitHub org security rulesets.
+    - Repository security settings, Dependabot alerts, and Secret Scanning enabled.
