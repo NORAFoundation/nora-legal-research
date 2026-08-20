@@ -47,14 +47,19 @@ gates:
       issue + PR templates present; 6 issue seeds in orchestrator issue-seeds/nora-legal-research.yaml;
       1 seeded good-first-issue open (NORAFoundation/nora-legal-research#4).
   remote_ci:
-    status: pass
+    status: blocked
     evidence:
-    - GitHub Actions ci + codeql success on pushed main (runs 32327118718/32327118718,
-      dependency graph 32329661854).
+    - GitHub Actions ci success on pushed main (runs 32335412776, 32334860737; verified 2026-08-20).
+    - codeql analysis completes locally on runner (45 queries, SARIF exported) but SARIF upload
+      rejected: "Advanced Security must be enabled for this repository to use code scanning"
+      (runs 32335412762, 32334860771 failed). CodeQL requires GitHub Advanced Security,
+      not available for private repos on GitHub Free.
+    - codeql workflow pinned to github/codeql-action@v4 with actions:read scope (commit fc1ce58).
   remote_security_configuration:
     status: blocked
     evidence:
     - .github/dependabot.yml present and dependency graph runs succeed.
     - Branch protection/rulesets API returns 403 (GitHub Free private org);
-      vulnerability alerts, automated security fixes, secret scanning not available for
-      private repositories on GitHub Free. Features unlock at public visibility switch.
+      vulnerability alerts, automated security fixes, secret scanning, and code scanning
+      (CodeQL/Advanced Security) not available for private repositories on GitHub Free.
+      Features unlock at public visibility switch.
