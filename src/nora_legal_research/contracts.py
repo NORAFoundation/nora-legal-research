@@ -19,6 +19,20 @@ class PrecedentialStatus(str, Enum):
     QUESTIONED = "questioned"
     SUPERSEDED_BY_STATUTE = "superseded_by_statute"
 
+class CourtLevel(str, Enum):
+    FEDERAL_SUPREME = "federal_supreme"
+    FEDERAL_APPELLATE = "federal_appellate"
+    FEDERAL_DISTRICT = "federal_district"
+    STATE_SUPREME = "state_supreme"
+    STATE_APPELLATE = "state_appellate"
+    STATE_TRIAL = "state_trial"
+
+class AuthorityScore(BaseModel):
+    citation: str
+    authority_type: AuthorityType = AuthorityType.SECONDARY
+    precedential_status: PrecedentialStatus = PrecedentialStatus.PERSUASIVE
+    score: float = 0.5
+    is_binding: bool = False
 class Jurisdiction(BaseModel):
     code: str  # e.g. US, US-WI, US-MN, US-8th-Cir
     level: str  # federal_supreme, federal_appellate, state_supreme, state_appellate, trial

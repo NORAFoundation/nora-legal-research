@@ -14,6 +14,13 @@ The minimum reference vertical slice is complete and verified:
 - `src/nora_legal_research/courtlistener.py`: `CourtListenerNormalizer` mapping raw API payloads into canonical authority citations.
 - `src/nora_legal_research/treatment.py`: `TreatmentAnalyzer` auditing adverse authority and generating overruled status warnings.
 
+## Contract Targets — Not Yet Implemented
+
+The following symbols are described in documentation but are **not present** in the current source:
+
+- `AuthorityProvider` — centralized provider of court-level and precedential status metadata
+- `CitationVerifier` — external service connector for Shepard's/KeyCite or similar treatment verification
+- Production-scale Westlaw/Lexis/PACER parser adapters
 ## Verified
 
 - `make test` / `pytest`: **7 passed in 0.11s**.
