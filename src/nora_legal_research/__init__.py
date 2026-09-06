@@ -3,28 +3,50 @@
 from .citation_guard import CitationGuard
 from .contracts import (
     AuthorityScore,
+    AuthorityRecord,
     AuthorityType,
     Citation,
     CourtLevel,
     PrecedentialStatus,
     QuoteSpan,
     ResearchSnapshot,
+    CurrentnessAssessment,
+    ProviderMetadata,
+    Provenance,
+    QueryPlanReference,
+    TreatmentStatus,
+    VerificationStatus,
 )
-from .courtlistener import CourtListenerNormalizer
+from .providers import AuthorityProvider, AuthorityResearchRequest, ProviderCapabilities, ProviderSearchResult
+from .normalize import normalize_provider_result
+from .courtlistener import CourtListenerNormalizer, CourtListenerProviderAdapter
 from .quote_verifier import QuoteVerifier
 from .treatment import TreatmentAnalyzer
 
 __all__ = [
     "AuthorityScore",
+    "AuthorityRecord",
+    "AuthorityProvider",
+    "AuthorityResearchRequest",
     "AuthorityType",
     "Citation",
     "CitationGuard",
     "CourtLevel",
     "CourtListenerNormalizer",
+    "CourtListenerProviderAdapter",
     "PrecedentialStatus",
     "QuoteSpan",
     "QuoteVerifier",
     "ResearchSnapshot",
+    "CurrentnessAssessment",
+    "ProviderCapabilities",
+    "ProviderMetadata",
+    "ProviderSearchResult",
+    "Provenance",
+    "QueryPlanReference",
+    "TreatmentStatus",
     "TreatmentAnalyzer",
+    "VerificationStatus",
+    "normalize_provider_result",
 ]
 __version__ = "0.0.1"

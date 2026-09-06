@@ -1,6 +1,11 @@
 from __future__ import annotations
-from typing import Any, Dict, Optional
-from nora_legal_research.contracts import Citation
+from typing import Any, Callable, Dict, Optional
+from nora_legal_research.contracts import AuthorityRecord, Citation
+from nora_legal_research.providers import (
+    AuthorityResearchRequest,
+    ProviderCapabilities,
+    ProviderSearchResult,
+)
 
 class CourtListenerNormalizer:
     """
@@ -24,4 +29,45 @@ class CourtListenerNormalizer:
             year=yr,
             jurisdiction_code=jur,
             normalized_cite=cite_str
+        )
+
+    def normalize_authority(self, payload: Dict[str, Any], *, provider_record_id: str | None = None) -> AuthorityRecord:
+        citation = self.normalize_opinion(payload)
+        return AuthorityRecord(
+            **citation.model_dump(),
+            authority_id=provider_record_id,
+            case_name=payload.get("case_name") or payload.get("caseName"),
+            court=payload.get("court") if isinstance(payload.get("court"), str) else None,
+            decision_date=(payload.get("dateFiled") or payload.get("date_filed") or payload.get("date")),
+            provider="COURTLISTENER",
+            provider_record_id=provider_record_id,
+            limitations=["Provider retrieval does not establish treatment or currentness."],
+        )
+
+
+class CourtListenerProviderAdapter:
+    """Provider boundary only; acquisition, ranking and treatment stay outside this adapter."""
+
+    name = "COURTLISTENER"
+    capabilities = ProviderCapabilities(
+        search=True,
+        opinion_retrieval=True,
+        cluster_retrieval=True,
+        court_metadata=True,
+        citation_graph_outbound=True,
+        citation_graph_inbound=True,
+    )
+
+    def __init__(self, search_fn: Callable[[AuthorityResearchRequest], list[Dict[str, Any]]]):
+        self._search_fn = search_fn
+
+    def search(self, request: AuthorityResearchRequest) -> ProviderSearchResult:
+        records = self._search_fn(request)
+        if not isinstance(records, list):
+            raise ValueError("CourtListener provider returned a non-list result")
+        return ProviderSearchResult(
+            provider=self.name,
+            capabilities=self.capabilities,
+            authorities=tuple(records),
+            limitations=("Treatment and currentness require separate verification.",),
         )
