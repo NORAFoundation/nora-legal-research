@@ -17,7 +17,9 @@ from .contracts import (
     TreatmentStatus,
     VerificationStatus,
 )
-from .providers import AuthorityProvider, AuthorityResearchRequest, ProviderCapabilities, ProviderSearchResult
+from .providers import AuthorityProvider, AuthorityResearchRequest, CourtListenerMirrorProvider, ProviderCapabilities, ProviderSearchResult
+from .provider_contract import ProviderAuthorityCandidate, ProviderSearchRequestModel, ProviderSearchResponseModel
+from .transport import AuthorityProviderTransport, FixtureTransport, HttpMirrorTransport
 from .normalize import normalize_provider_result
 from .courtlistener import CourtListenerNormalizer, CourtListenerProviderAdapter
 from .quote_verifier import QuoteVerifier
@@ -28,20 +30,27 @@ __all__ = [
     "AuthorityRecord",
     "AuthorityProvider",
     "AuthorityResearchRequest",
+    "AuthorityProviderTransport",
     "AuthorityType",
     "Citation",
     "CitationGuard",
     "CourtLevel",
     "CourtListenerNormalizer",
     "CourtListenerProviderAdapter",
+    "CourtListenerMirrorProvider",
+    "FixtureTransport",
+    "HttpMirrorTransport",
     "PrecedentialStatus",
     "QuoteSpan",
     "QuoteVerifier",
     "ResearchSnapshot",
     "CurrentnessAssessment",
     "ProviderCapabilities",
+    "ProviderAuthorityCandidate",
     "ProviderMetadata",
     "ProviderSearchResult",
+    "ProviderSearchRequestModel",
+    "ProviderSearchResponseModel",
     "Provenance",
     "QueryPlanReference",
     "TreatmentStatus",

@@ -1,0 +1,13 @@
+{
+  "provider_contract_version": 1,
+  "provider_name": "COURTLISTENER_MIRROR",
+  "service_version": "mirror-test-1",
+  "snapshot_id": "CL-2026-06-30",
+  "snapshot_date": "2026-06-30",
+  "research_id": "R-004",
+  "capabilities": {"search": true, "court_metadata": true},
+  "authorities": [{"provider_record_id": "CL-A-1", "case_name": "Public v. State", "citation": "2026 WI App 1", "court": "Wisconsin Court of Appeals", "decision_date": "2026-01-15", "authority_status": "UNKNOWN", "binding_weight": "UNKNOWN", "procedural_fit": "UNKNOWN", "opinion_type": "majority", "provider_rank": 1}],
+  "partial": false,
+  "limitations": [],
+  "provenance": {"source": "synthetic-fixture"}
+}

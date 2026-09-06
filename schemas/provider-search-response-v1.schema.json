@@ -1,0 +1,201 @@
+{
+  "$defs": {
+    "ProviderAuthorityCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "authority_status": {
+          "default": "UNKNOWN",
+          "title": "Authority Status",
+          "type": "string"
+        },
+        "binding_weight": {
+          "default": "UNKNOWN",
+          "title": "Binding Weight",
+          "type": "string"
+        },
+        "case_name": {
+          "title": "Case Name",
+          "type": "string"
+        },
+        "citation": {
+          "title": "Citation",
+          "type": "string"
+        },
+        "court": {
+          "title": "Court",
+          "type": "string"
+        },
+        "decision_date": {
+          "title": "Decision Date",
+          "type": "string"
+        },
+        "exact_proposition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exact Proposition"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "opinion_type": {
+          "default": "UNKNOWN",
+          "title": "Opinion Type",
+          "type": "string"
+        },
+        "procedural_fit": {
+          "default": "UNKNOWN",
+          "title": "Procedural Fit",
+          "type": "string"
+        },
+        "provider_rank": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Rank"
+        },
+        "provider_record_id": {
+          "title": "Provider Record Id",
+          "type": "string"
+        },
+        "relationship": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Relationship"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        }
+      },
+      "required": [
+        "provider_record_id",
+        "case_name",
+        "citation",
+        "court",
+        "decision_date"
+      ],
+      "title": "ProviderAuthorityCandidate",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorities": {
+      "items": {
+        "$ref": "#/$defs/ProviderAuthorityCandidate"
+      },
+      "title": "Authorities",
+      "type": "array"
+    },
+    "capabilities": {
+      "additionalProperties": {
+        "type": "boolean"
+      },
+      "title": "Capabilities",
+      "type": "object"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "partial": {
+      "default": false,
+      "title": "Partial",
+      "type": "boolean"
+    },
+    "provenance": {
+      "additionalProperties": true,
+      "title": "Provenance",
+      "type": "object"
+    },
+    "provider_contract_version": {
+      "default": 1,
+      "title": "Provider Contract Version",
+      "type": "integer"
+    },
+    "provider_name": {
+      "title": "Provider Name",
+      "type": "string"
+    },
+    "research_id": {
+      "title": "Research Id",
+      "type": "string"
+    },
+    "service_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Service Version"
+    },
+    "snapshot_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Snapshot Date"
+    },
+    "snapshot_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Snapshot Id"
+    }
+  },
+  "required": [
+    "provider_name",
+    "research_id"
+  ],
+  "title": "ProviderSearchResponseModel",
+  "type": "object"
+}

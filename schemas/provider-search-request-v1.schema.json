@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "court_level": {
+      "title": "Court Level",
+      "type": "string"
+    },
+    "date_range": {
+      "default": "ALL_AVAILABLE",
+      "title": "Date Range",
+      "type": "string"
+    },
+    "doctrinal_issue": {
+      "title": "Doctrinal Issue",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "limit": {
+      "default": 12,
+      "title": "Limit",
+      "type": "integer"
+    },
+    "provider_contract_version": {
+      "default": 1,
+      "title": "Provider Contract Version",
+      "type": "integer"
+    },
+    "query_variants": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Query Variants",
+      "type": "array"
+    },
+    "requested_capabilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Requested Capabilities",
+      "type": "array"
+    },
+    "research_id": {
+      "title": "Research Id",
+      "type": "string"
+    },
+    "target_proposition": {
+      "title": "Target Proposition",
+      "type": "string"
+    }
+  },
+  "required": [
+    "research_id",
+    "jurisdiction",
+    "court_level",
+    "doctrinal_issue",
+    "target_proposition"
+  ],
+  "title": "ProviderSearchRequestModel",
+  "type": "object"
+}

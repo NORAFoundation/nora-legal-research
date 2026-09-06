@@ -1,0 +1,747 @@
+{
+  "$defs": {
+    "AuthorityRecord": {
+      "additionalProperties": false,
+      "description": "Canonical public authority record; provider details remain provenance, not truth.",
+      "properties": {
+        "adverse_relationship": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adverse Relationship"
+        },
+        "authority_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Authority Id"
+        },
+        "authority_type": {
+          "$ref": "#/$defs/AuthorityType",
+          "default": "precedent_persuasive"
+        },
+        "case_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Case Name"
+        },
+        "citation_text": {
+          "title": "Citation Text",
+          "type": "string"
+        },
+        "court": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Court"
+        },
+        "decision_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Decision Date"
+        },
+        "exact_proposition": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Exact Proposition"
+        },
+        "jurisdiction_code": {
+          "title": "Jurisdiction Code",
+          "type": "string"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "normalized_cite": {
+          "title": "Normalized Cite",
+          "type": "string"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "pinpoint": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pinpoint"
+        },
+        "precedential_status": {
+          "$ref": "#/$defs/PrecedentialStatus",
+          "default": "unknown"
+        },
+        "procedural_posture": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Procedural Posture"
+        },
+        "provider": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider"
+        },
+        "provider_record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Record Id"
+        },
+        "quote_verification": {
+          "$ref": "#/$defs/VerificationStatus",
+          "default": "not_available"
+        },
+        "reporter": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reporter"
+        },
+        "retrieved_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieved At"
+        },
+        "treatment_status": {
+          "$ref": "#/$defs/TreatmentStatus",
+          "default": "unknown"
+        },
+        "volume": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Volume"
+        },
+        "year": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Year"
+        }
+      },
+      "required": [
+        "citation_text",
+        "jurisdiction_code",
+        "normalized_cite"
+      ],
+      "title": "AuthorityRecord",
+      "type": "object"
+    },
+    "AuthorityType": {
+      "enum": [
+        "constitutional",
+        "statute",
+        "regulation",
+        "precedent_binding",
+        "precedent_persuasive",
+        "secondary"
+      ],
+      "title": "AuthorityType",
+      "type": "string"
+    },
+    "CurrentnessAssessment": {
+      "properties": {
+        "checked_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Checked At"
+        },
+        "status": {
+          "$ref": "#/$defs/TreatmentStatus",
+          "default": "unknown"
+        },
+        "unresolved_questions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Questions",
+          "type": "array"
+        }
+      },
+      "title": "CurrentnessAssessment",
+      "type": "object"
+    },
+    "Jurisdiction": {
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "level": {
+          "title": "Level",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "level",
+        "name"
+      ],
+      "title": "Jurisdiction",
+      "type": "object"
+    },
+    "PrecedentialStatus": {
+      "enum": [
+        "binding",
+        "persuasive",
+        "overruled",
+        "questioned",
+        "superseded_by_statute",
+        "unknown"
+      ],
+      "title": "PrecedentialStatus",
+      "type": "string"
+    },
+    "Provenance": {
+      "properties": {
+        "digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Digest"
+        },
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "provider": {
+          "title": "Provider",
+          "type": "string"
+        },
+        "retrieved_at": {
+          "format": "date-time",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "source_kind": {
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "source_record_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Record Id"
+        },
+        "source_uri": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Uri"
+        }
+      },
+      "required": [
+        "provider",
+        "source_kind"
+      ],
+      "title": "Provenance",
+      "type": "object"
+    },
+    "ProviderMetadata": {
+      "properties": {
+        "access_mode": {
+          "title": "Access Mode",
+          "type": "string"
+        },
+        "capabilities_unavailable": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Capabilities Unavailable",
+          "type": "array"
+        },
+        "capabilities_used": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Capabilities Used",
+          "type": "array"
+        },
+        "provider_name": {
+          "title": "Provider Name",
+          "type": "string"
+        },
+        "provider_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Version"
+        },
+        "service_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Version"
+        },
+        "snapshot_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Date"
+        },
+        "snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Id"
+        }
+      },
+      "required": [
+        "provider_name",
+        "access_mode"
+      ],
+      "title": "ProviderMetadata",
+      "type": "object"
+    },
+    "QueryPlanReference": {
+      "properties": {
+        "filters": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Filters",
+          "type": "object"
+        },
+        "query_id": {
+          "title": "Query Id",
+          "type": "string"
+        },
+        "variants": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Variants",
+          "type": "array"
+        }
+      },
+      "required": [
+        "query_id"
+      ],
+      "title": "QueryPlanReference",
+      "type": "object"
+    },
+    "QuoteSpan": {
+      "properties": {
+        "citation_text": {
+          "title": "Citation Text",
+          "type": "string"
+        },
+        "exact_quote": {
+          "title": "Exact Quote",
+          "type": "string"
+        },
+        "pinpoint_page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Pinpoint Page"
+        },
+        "span_id": {
+          "title": "Span Id",
+          "type": "string"
+        },
+        "verified": {
+          "default": false,
+          "title": "Verified",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "span_id",
+        "citation_text",
+        "exact_quote"
+      ],
+      "title": "QuoteSpan",
+      "type": "object"
+    },
+    "TreatmentStatus": {
+      "enum": [
+        "complete",
+        "limited",
+        "not_available",
+        "unknown"
+      ],
+      "title": "TreatmentStatus",
+      "type": "string"
+    },
+    "VerificationStatus": {
+      "enum": [
+        "verified",
+        "unverified",
+        "partial",
+        "not_available"
+      ],
+      "title": "VerificationStatus",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Stable provider-neutral output consumed by NORA legal workflows.",
+  "properties": {
+    "adverse_authorities": {
+      "items": {
+        "$ref": "#/$defs/AuthorityRecord"
+      },
+      "title": "Adverse Authorities",
+      "type": "array"
+    },
+    "authorities": {
+      "items": {
+        "$ref": "#/$defs/AuthorityRecord"
+      },
+      "title": "Authorities",
+      "type": "array"
+    },
+    "checked_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Checked At"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    },
+    "court_hierarchy_scope": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Court Hierarchy Scope"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "currentness": {
+      "$ref": "#/$defs/CurrentnessAssessment"
+    },
+    "doctrinal_issue": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Doctrinal Issue"
+    },
+    "jurisdiction": {
+      "$ref": "#/$defs/Jurisdiction"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "missing_verification": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Verification",
+      "type": "array"
+    },
+    "procedural_posture": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Procedural Posture"
+    },
+    "provenance": {
+      "items": {
+        "$ref": "#/$defs/Provenance"
+      },
+      "title": "Provenance",
+      "type": "array"
+    },
+    "provider": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ProviderMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "query": {
+      "title": "Query",
+      "type": "string"
+    },
+    "query_plan": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/QueryPlanReference"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "quote_spans": {
+      "items": {
+        "$ref": "#/$defs/QuoteSpan"
+      },
+      "title": "Quote Spans",
+      "type": "array"
+    },
+    "reproducibility": {
+      "additionalProperties": true,
+      "title": "Reproducibility",
+      "type": "object"
+    },
+    "research_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Research Id"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "snapshot_id": {
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "status_warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Status Warnings",
+      "type": "array"
+    },
+    "target_proposition": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Target Proposition"
+    },
+    "unresolved_treatment_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Treatment Questions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "query",
+    "jurisdiction"
+  ],
+  "title": "ResearchSnapshot",
+  "type": "object"
+}

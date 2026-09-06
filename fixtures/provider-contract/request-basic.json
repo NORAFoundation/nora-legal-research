@@ -1,0 +1,12 @@
+{
+  "provider_contract_version": 1,
+  "research_id": "R-004",
+  "jurisdiction": "US-WI",
+  "court_level": "state_appellate",
+  "doctrinal_issue": "speedy_trial",
+  "target_proposition": "P-004",
+  "query_variants": ["speedy trial continuance", "adverse speedy trial"],
+  "date_range": "ALL_AVAILABLE",
+  "limit": 12,
+  "requested_capabilities": ["search"]
+}

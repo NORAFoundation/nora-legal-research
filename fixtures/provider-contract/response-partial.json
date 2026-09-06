@@ -1,0 +1,12 @@
+{
+  "provider_contract_version": 1,
+  "provider_name": "COURTLISTENER_MIRROR",
+  "snapshot_id": "CL-2026-06-30",
+  "snapshot_date": "2026-06-30",
+  "research_id": "R-004",
+  "capabilities": {"search": true},
+  "authorities": [],
+  "partial": true,
+  "limitations": ["Provider result truncated at configured limit."],
+  "provenance": {"source": "synthetic-fixture"}
+}

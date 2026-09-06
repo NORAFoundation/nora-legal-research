@@ -1,0 +1,12 @@
+{
+  "provider_contract_version": 1,
+  "provider_name": "COURTLISTENER_MIRROR",
+  "snapshot_id": "CL-2026-06-30",
+  "snapshot_date": "2026-06-30",
+  "research_id": "R-004",
+  "capabilities": {"search": true},
+  "authorities": [{"provider_record_id": "CL-A-2", "case_name": "Limiting v. State", "citation": "2025 WI App 9", "court": "Wisconsin Court of Appeals", "decision_date": "2025-02-10", "authority_status": "LIMITING", "binding_weight": "UNKNOWN", "procedural_fit": "LIMITED", "opinion_type": "majority", "relationship": "limits target proposition"}],
+  "partial": false,
+  "limitations": ["Treatment not evaluated by provider."],
+  "provenance": {"source": "synthetic-fixture"}
+}

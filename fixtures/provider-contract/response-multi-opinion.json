@@ -1,0 +1,15 @@
+{
+  "provider_contract_version": 1,
+  "provider_name": "COURTLISTENER_MIRROR",
+  "snapshot_id": "CL-2026-06-30",
+  "snapshot_date": "2026-06-30",
+  "research_id": "R-004",
+  "capabilities": {"search": true, "opinion_retrieval": true, "cluster_retrieval": true},
+  "authorities": [
+    {"provider_record_id": "CL-C-1", "case_name": "Cluster v. State", "citation": "2024 WI 2", "court": "Wisconsin Supreme Court", "decision_date": "2024-01-10", "authority_status": "UNKNOWN", "binding_weight": "UNKNOWN", "procedural_fit": "UNKNOWN", "opinion_type": "majority"},
+    {"provider_record_id": "CL-C-2", "case_name": "Cluster v. State", "citation": "2024 WI 2", "court": "Wisconsin Supreme Court", "decision_date": "2024-01-10", "authority_status": "UNKNOWN", "binding_weight": "UNKNOWN", "procedural_fit": "UNKNOWN", "opinion_type": "dissent"}
+  ],
+  "partial": false,
+  "limitations": ["Opinion voice must be preserved by downstream treatment analysis."],
+  "provenance": {"source": "synthetic-fixture"}
+}

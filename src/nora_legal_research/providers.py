@@ -53,3 +53,26 @@ class CanonicalAuthorityNormalizer(Protocol):
 def require_capability(provider: AuthorityProvider, capability: str) -> None:
     if not getattr(provider.capabilities, capability, False):
         raise NotImplementedError(f"provider capability unsupported: {capability}")
+
+
+class CourtListenerMirrorProvider:
+    """Canonical provider facade over a transport; mirror storage stays outside this package."""
+
+    name = "COURTLISTENER_MIRROR"
+
+    def __init__(self, transport: AuthorityProvider):
+        self.transport = transport
+        self.capabilities = transport.capabilities
+
+    def search(self, request: AuthorityResearchRequest) -> ProviderSearchResult:
+        require_capability(self, "search")
+        result = self.transport.search(request)
+        if result.provider != self.name:
+            result = ProviderSearchResult(
+                provider=self.name,
+                capabilities=result.capabilities,
+                authorities=result.authorities,
+                provenance=result.provenance,
+                limitations=result.limitations,
+            )
+        return result

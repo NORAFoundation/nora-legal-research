@@ -108,6 +108,9 @@ class ProviderMetadata(BaseModel):
     access_mode: str
     capabilities_used: List[str] = Field(default_factory=list)
     capabilities_unavailable: List[str] = Field(default_factory=list)
+    snapshot_id: Optional[str] = None
+    snapshot_date: Optional[str] = None
+    service_version: Optional[str] = None
 
 
 class QueryPlanReference(BaseModel):

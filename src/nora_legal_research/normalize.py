@@ -23,7 +23,7 @@ def normalize_provider_result(
     snapshot_id: str | None = None,
 ) -> ResearchSnapshot:
     """Normalize provider records without asserting treatment or legal effect."""
-    normalizer = CourtListenerNormalizer() if result.provider == "COURTLISTENER" else None
+    normalizer = CourtListenerNormalizer() if result.provider in {"COURTLISTENER", "COURTLISTENER_MIRROR"} else None
     authorities: list[AuthorityRecord] = []
     adverse: list[AuthorityRecord] = []
     for index, payload in enumerate(result.authorities):
@@ -55,11 +55,20 @@ def normalize_provider_result(
             access_mode=result.provider,
             capabilities_used=[name for name, enabled in vars(result.capabilities).items() if enabled is True],
             capabilities_unavailable=list(result.capabilities.unsupported),
+            snapshot_id=str(result.provenance.get("snapshot_id")) if result.provenance.get("snapshot_id") else None,
+            snapshot_date=str(result.provenance.get("snapshot_date")) if result.provenance.get("snapshot_date") else None,
+            service_version=str(result.provenance.get("service_version")) if result.provenance.get("service_version") else None,
         ),
         currentness=CurrentnessAssessment(status=TreatmentStatus.UNKNOWN, checked_at=now),
         unresolved_treatment_questions=["Treatment and currentness require separate verification."],
         limitations=list(result.limitations),
-        provenance=[Provenance(provider=result.provider, source_kind="public_authority_provider", retrieved_at=now)],
+        provenance=[Provenance(
+            provider=result.provider,
+            source_kind="public_authority_provider",
+            source_record_id=str(result.provenance.get("snapshot_id")) if result.provenance.get("snapshot_id") else None,
+            retrieved_at=now,
+            limitations=list(result.limitations),
+        )],
         checked_at=now,
         confidence="UNASSESSED",
         reproducibility={"provider": result.provider, "research_id": request.research_id},
