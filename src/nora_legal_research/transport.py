@@ -7,7 +7,7 @@ import time
 import urllib.error
 import urllib.request
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Any, Callable, Protocol
 
 from .provider_contract import ProviderSearchRequestModel, ProviderSearchResponseModel
 from .providers import AuthorityResearchRequest, ProviderCapabilities, ProviderSearchResult
@@ -46,6 +46,18 @@ class AuthorityProviderTransport(Protocol):
         ...
 
 
+class McpToolInvoker(Protocol):
+    """Minimal boundary for an approved MCP client.
+
+    The invoker owns stdio/session framing.  This package only consumes the
+    bounded provider-contract envelope returned by the tool and never imports
+    an MCP SDK or reaches a database directly.
+    """
+
+    def __call__(self, tool_name: str, arguments: dict[str, Any]) -> Any:
+        ...
+
+
 @dataclass(frozen=True)
 class FixtureTransport:
     response: ProviderSearchResponseModel
@@ -58,6 +70,46 @@ class FixtureTransport:
         if self.response.research_id != request.research_id:
             raise ProviderContractError("provider research_id does not match request")
         return _response_to_result(self.response)
+
+
+@dataclass(frozen=True)
+class McpMirrorTransport:
+    """Transport adapter for a future mirror MCP provider boundary.
+
+    The mirror's current stdio tools expose a richer, service-native shape.
+    They must be wrapped by a qualified broker that returns the versioned
+    provider response envelope before this adapter will accept them.  This
+    prevents raw MCP tool payloads from silently becoming legal-domain data.
+    """
+
+    invoke: McpToolInvoker
+    tool_name: str = "search_authorities"
+
+    @property
+    def capabilities(self) -> ProviderCapabilities:
+        return ProviderCapabilities(search=True)
+
+    def search(self, request: AuthorityResearchRequest) -> ProviderSearchResult:
+        arguments = ProviderSearchRequestModel(
+            research_id=request.research_id,
+            jurisdiction=request.jurisdiction,
+            court_level=request.court_level,
+            doctrinal_issue=request.doctrinal_issue,
+            target_proposition=request.target_proposition,
+            query_variants=list(request.query_variants),
+            date_range=request.date_range,
+            requested_capabilities=["search"],
+        ).model_dump(mode="json")
+        try:
+            raw = self.invoke(self.tool_name, arguments)
+            response = ProviderSearchResponseModel.model_validate(raw)
+        except ProviderError:
+            raise
+        except Exception as exc:
+            raise ProviderContractError("MCP provider response schema invalid") from exc
+        if response.provider_contract_version != 1 or response.research_id != request.research_id:
+            raise ProviderContractError("MCP provider response version or research_id mismatch")
+        return _response_to_result(response)
 
 
 class _NoRedirectHandler(urllib.request.HTTPRedirectHandler):

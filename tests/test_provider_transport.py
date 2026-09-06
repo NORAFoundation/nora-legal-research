@@ -9,6 +9,7 @@ from nora_legal_research.provider_contract import ProviderSearchRequestModel, Pr
 from nora_legal_research.providers import AuthorityResearchRequest, CourtListenerMirrorProvider
 from nora_legal_research.transport import (
     FixtureTransport,
+    McpMirrorTransport,
     ProviderContractError,
     ProviderUnavailable,
 )
@@ -61,3 +62,25 @@ def test_fixture_provider_rejects_wrong_research_id() -> None:
     with pytest.raises(ProviderContractError):
         provider.search(request())
 
+
+def test_mcp_transport_requires_versioned_provider_envelope() -> None:
+    fixture = response("response-adverse.json").model_dump(mode="json")
+    calls = []
+
+    def invoke(tool_name, arguments):
+        calls.append((tool_name, arguments))
+        return fixture
+
+    result = McpMirrorTransport(invoke).search(request())
+    assert result.provider == "COURTLISTENER_MIRROR"
+    assert result.authorities[0]["provider_record_id"] == "CL-A-2"
+    assert calls[0][0] == "search_authorities"
+    assert "research_id" in calls[0][1]
+
+
+def test_mcp_transport_rejects_service_native_unwrapped_payload() -> None:
+    def invoke(_tool_name, _arguments):
+        return {"query": "speedy trial", "authorities": []}
+
+    with pytest.raises(ProviderContractError):
+        McpMirrorTransport(invoke).search(request())
