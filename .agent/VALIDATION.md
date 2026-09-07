@@ -15,3 +15,9 @@
 | `ruff check .` / `python3 -m ruff check .` | SKIPPED — ruff unavailable; not installed because not a required release dependency |
 | `git diff --check` | PASS |
 | `make validate` | PASS |
+| `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src pytest -q tests/test_narrative_compiler.py` | PASS — 12 passed |
+| `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src pytest -q` | PASS — 61 passed |
+| `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 scripts/generate_schemas.py` plus `--check` | PASS — derived artifact schemas generated from canonical models and current |
+| `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src python3 -m compileall -q src tests` | PASS |
+| Draft 2020-12 validation of all generated schemas | PASS — 10 schemas |
+| Read-only mirror poll after quality pass | PASS — `origin/main` `ca9201f`, `COURTLISTENER_MIRROR_PROVIDER=BLOCKED_BOUNDED_LIVE_PROOF` |

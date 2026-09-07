@@ -32,3 +32,8 @@ also attest that same hash; timestamps never enter the stable hash.
 `AuthorityProvider` is intentionally provider-neutral. CourtListener is implemented as an adapter boundary only. Acquisition, database serving, ranking, treatment analysis, and currentness remain outside the adapter.
 
 The compatibility result emitted by the public-law sidecar carries the contract marker `nora.legal-research/ResearchSnapshot/1.0` and is converted into this model by the next integration slice.
+
+Lay-narrative intake, research intent, issue hypotheses, query plans, quality
+assessments, and guided explanations are separate derived artifacts. They
+compile messy user stories into bounded public requests but do not alter this
+snapshot contract or replace source-faithful authority records.

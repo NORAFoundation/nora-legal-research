@@ -48,6 +48,12 @@ provider-neutral `ResearchSnapshot` schema are generated from the canonical
 Pydantic models with `python3 scripts/generate_schemas.py --check` enforcing
 staleness.
 
+Lay users do not need to formulate a legal query. The separate narrative
+compiler preserves the reported story as evidence, resolves jurisdiction and
+posture uncertainty, creates issue hypotheses, and compiles bounded discovery
+and qualification query families. See
+[`docs/LAY_NARRATIVE_RESEARCH_COMPILER.md`](docs/LAY_NARRATIVE_RESEARCH_COMPILER.md).
+
 ## Source provenance
 
 Legacy NORA repositories are component sources, not authorities. Migrated units are recorded in `SOURCE_PROVENANCE.yaml`.

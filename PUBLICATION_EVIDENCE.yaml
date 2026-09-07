@@ -63,3 +63,43 @@ gates:
       vulnerability alerts, automated security fixes, secret scanning, and code scanning
       (CodeQL/Advanced Security) not available for private repositories on GitHub Free.
       Features unlock at public visibility switch.
+  LAY_NARRATIVE_INGESTION:
+    status: pass_fixture_only
+    evidence:
+    - NarrativeResearchIntake preserves raw narrative and separated evidence categories;
+      synthetic qualification vectors pass.
+  JURISDICTION_RESOLUTION:
+    status: pass_fixture_only
+    evidence:
+    - Known, inferred, unknown, and conflicting resolution states plus high-value
+      clarification behavior are covered by narrative compiler tests.
+  ISSUE_HYPOTHESIS_GENERATION:
+    status: pass_fixture_only
+    evidence:
+    - Candidate issues retain trigger facts, rationale, ontology source/version, and
+      hypothesis status; wrong-label and mixed-matter vectors pass.
+  QUERY_PLAN_COMPILATION:
+    status: pass_fixture_only
+    evidence:
+    - Ten bounded query classes are generated per candidate issue with rationale,
+      constraints, capabilities, and discovery/qualification mode.
+  PRIVATE_TO_PUBLIC_QUERY_ABSTRACTION:
+    status: pass_fixture_only
+    evidence:
+    - Synthetic names, case numbers, email, address, and narrative canaries are
+      absent from serialized AuthorityResearchRequest values.
+  LAY_LANGUAGE_RETRIEVAL_RECALL:
+    status: blocked_live_dependency
+    evidence:
+    - Fixture query compilation passes; live provider qualification remains blocked
+      by COURTLISTENER_MIRROR_PROVIDER.
+  MULTI_PASS_RESEARCH_ORCHESTRATION:
+    status: pass_fixture_only
+    evidence:
+    - ResearchPlan records discovery, qualification, adverse, limiting, graph,
+      currentness, and verification query families plus stopping conditions.
+  PRO_SE_EXPLANATION_FIDELITY:
+    status: pass_fixture_only
+    evidence:
+    - GuidedResearchExplanation exposes reported facts, assumptions, clarifications,
+      and hypothesis disclaimers.

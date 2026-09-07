@@ -17,6 +17,19 @@ CourtListener/local corpus → authority normalization → jurisdiction/hierarch
 search/citation graph → citation validation → quote-span validation →
 currentness/treatment → adverse-authority search → ResearchSnapshot → human review.
 
+## Source, retrieval, and intelligence layers
+
+The CourtListener source mirror remains source-faithful and reproducible. It is
+not rewritten for lay terminology. Derived full-text, citation, hierarchy,
+segmentation, concept, and semantic indexes are disposable Layer B structures
+linked to source IDs, snapshots, and build versions. `nora-legal-research`
+owns Layer C research intelligence: narrative intake, intent, issue
+hypotheses, query families, qualification, and provider-neutral snapshots.
+
+The lay compiler uses the same source corpus and research standard for every
+user. Lay-language mappings are derived, versioned, jurisdiction-sensitive
+navigation aids; they are never authority meaning or legal conclusions.
+
 ## Extension points
 
 Court adapters, citation parsers, treatment providers, jurisdiction packs, local corpora, MCP/API adapters.

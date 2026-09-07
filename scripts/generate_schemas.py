@@ -5,6 +5,13 @@ import json
 from pathlib import Path
 
 from nora_legal_research.contracts import ResearchSnapshot
+from nora_legal_research.narrative_compiler import (
+    GuidedResearchExplanation,
+    NarrativeResearchIntake,
+    ResearchIntent,
+    ResearchPlan,
+    ResearchQualityAssessment,
+)
 from nora_legal_research.provider_contract import AuthorityResearchRequest, ProviderSearchResponseModel
 from nora_legal_research.providers import ProviderSearchResult
 
@@ -15,6 +22,11 @@ SCHEMAS = {
     "authority-research-request-v1.schema.json": AuthorityResearchRequest,
     "provider-search-result-v1.schema.json": ProviderSearchResult,
     "provider-search-response-v1.schema.json": ProviderSearchResponseModel,
+    "narrative-research-intake-v1.schema.json": NarrativeResearchIntake,
+    "research-intent-v1.schema.json": ResearchIntent,
+    "research-plan-v1.schema.json": ResearchPlan,
+    "guided-research-explanation-v1.schema.json": GuidedResearchExplanation,
+    "research-quality-assessment-v1.schema.json": ResearchQualityAssessment,
 }
 
 

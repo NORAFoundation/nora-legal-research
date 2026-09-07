@@ -1,0 +1,336 @@
+{
+  "$defs": {
+    "DocumentReference": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "reference_id": {
+          "title": "Reference Id",
+          "type": "string"
+        },
+        "reference_type": {
+          "title": "Reference Type",
+          "type": "string"
+        },
+        "understood": {
+          "default": false,
+          "title": "Understood",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "reference_id",
+        "description",
+        "reference_type"
+      ],
+      "title": "DocumentReference",
+      "type": "object"
+    },
+    "EntityReference": {
+      "additionalProperties": false,
+      "properties": {
+        "entity_id": {
+          "title": "Entity Id",
+          "type": "string"
+        },
+        "entity_type": {
+          "title": "Entity Type",
+          "type": "string"
+        },
+        "private": {
+          "default": true,
+          "title": "Private",
+          "type": "boolean"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "entity_id",
+        "text",
+        "entity_type"
+      ],
+      "title": "EntityReference",
+      "type": "object"
+    },
+    "EvidenceCategory": {
+      "enum": [
+        "USER_ASSERTED_FACT",
+        "USER_QUESTION",
+        "USER_INTERPRETATION",
+        "UNKNOWN_OR_AMBIGUOUS_FACT",
+        "DOCUMENT_REFERENCE",
+        "DATE",
+        "PERSON_OR_ENTITY",
+        "LOCATION",
+        "COURT_OR_AGENCY",
+        "PROCEDURAL_EVENT"
+      ],
+      "title": "EvidenceCategory",
+      "type": "string"
+    },
+    "ExtractedDate": {
+      "additionalProperties": false,
+      "properties": {
+        "date_id": {
+          "title": "Date Id",
+          "type": "string"
+        },
+        "identity_sensitive": {
+          "default": false,
+          "title": "Identity Sensitive",
+          "type": "boolean"
+        },
+        "legally_material": {
+          "default": false,
+          "title": "Legally Material",
+          "type": "boolean"
+        },
+        "normalized_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Date"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "KNOWN"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "date_id",
+        "text"
+      ],
+      "title": "ExtractedDate",
+      "type": "object"
+    },
+    "NarrativeFact": {
+      "additionalProperties": false,
+      "properties": {
+        "adverse_signal": {
+          "default": false,
+          "title": "Adverse Signal",
+          "type": "boolean"
+        },
+        "category": {
+          "$ref": "#/$defs/EvidenceCategory",
+          "default": "USER_ASSERTED_FACT"
+        },
+        "fact_id": {
+          "title": "Fact Id",
+          "type": "string"
+        },
+        "materially_relevant": {
+          "default": false,
+          "title": "Materially Relevant",
+          "type": "boolean"
+        },
+        "source_span": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Span"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "KNOWN"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fact_id",
+        "text"
+      ],
+      "title": "NarrativeFact",
+      "type": "object"
+    },
+    "ProceduralEvent": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "event_id": {
+          "title": "Event Id",
+          "type": "string"
+        },
+        "event_type": {
+          "title": "Event Type",
+          "type": "string"
+        },
+        "fact_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fact Id"
+        },
+        "legally_material": {
+          "default": true,
+          "title": "Legally Material",
+          "type": "boolean"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "INFERRED"
+        }
+      },
+      "required": [
+        "event_id",
+        "event_type",
+        "description"
+      ],
+      "title": "ProceduralEvent",
+      "type": "object"
+    },
+    "ResolutionState": {
+      "enum": [
+        "KNOWN",
+        "INFERRED",
+        "UNKNOWN",
+        "CONFLICTING"
+      ],
+      "title": "ResolutionState",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Raw intake plus extracted evidence categories; never provider-bound.",
+  "properties": {
+    "contract": {
+      "default": "nora.legal-research/NarrativeResearchIntake/1.0",
+      "title": "Contract",
+      "type": "string"
+    },
+    "courts_or_agencies": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/EntityReference"
+      },
+      "title": "Courts Or Agencies",
+      "type": "array"
+    },
+    "dates": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ExtractedDate"
+      },
+      "title": "Dates",
+      "type": "array"
+    },
+    "document_references": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/DocumentReference"
+      },
+      "title": "Document References",
+      "type": "array"
+    },
+    "intake_id": {
+      "title": "Intake Id",
+      "type": "string"
+    },
+    "locations": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/EntityReference"
+      },
+      "title": "Locations",
+      "type": "array"
+    },
+    "narrative": {
+      "title": "Narrative",
+      "type": "string"
+    },
+    "people_or_entities": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/EntityReference"
+      },
+      "title": "People Or Entities",
+      "type": "array"
+    },
+    "procedural_events": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProceduralEvent"
+      },
+      "title": "Procedural Events",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "unknown_or_ambiguous_facts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NarrativeFact"
+      },
+      "title": "Unknown Or Ambiguous Facts",
+      "type": "array"
+    },
+    "user_asserted_facts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NarrativeFact"
+      },
+      "title": "User Asserted Facts",
+      "type": "array"
+    },
+    "user_interpretations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "User Interpretations",
+      "type": "array"
+    },
+    "user_questions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "User Questions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "intake_id",
+    "narrative"
+  ],
+  "title": "NarrativeResearchIntake",
+  "type": "object"
+}

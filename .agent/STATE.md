@@ -4,7 +4,7 @@
 
 - Canonical provider contract implementation is complete for the independent
   fixture lane.
-- Canonical tests: 47 passed.
+- Canonical tests: 61 passed, including lay-narrative qualification vectors.
 - Public-law sidecar tests: 31 passed.
 - Public-demo tests: 42 passed.
 - Generated schema check and `git diff --check`: passed.
@@ -13,6 +13,14 @@
 - Mirror `origin/main` at `ca9201f` reports
   `COURTLISTENER_MIRROR_PROVIDER=BLOCKED_BOUNDED_LIVE_PROOF`; no live E2E was
   attempted against its import/database infrastructure.
+- Lay narrative compilation is a separate derived-artifact lane: intake,
+  intent, issue hypotheses, query families, provider abstraction, and guided
+  explanation are implemented and versioned independently of ResearchSnapshot
+  v1.
+- Narrative fixture gates pass for extraction, jurisdiction behavior, issue
+  hypotheses, query compilation, privacy abstraction, multi-pass planning, and
+  explanation. Live retrieval-recall qualification remains blocked by the
+  mirror provider gate.
 
 ## Evidence boundaries
 

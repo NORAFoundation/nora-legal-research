@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assumptions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Assumptions",
+      "type": "array"
+    },
+    "clarifications_needed": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Clarifications Needed",
+      "type": "array"
+    },
+    "explanation_id": {
+      "title": "Explanation Id",
+      "type": "string"
+    },
+    "facts_treated_as_user_reported": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Facts Treated As User Reported",
+      "type": "array"
+    },
+    "translated_summary": {
+      "title": "Translated Summary",
+      "type": "string"
+    },
+    "transparency_notes": {
+      "default": [
+        "Issue labels are research hypotheses, not legal conclusions.",
+        "User-reported facts are not independently verified by intake compilation."
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Transparency Notes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "explanation_id",
+    "translated_summary"
+  ],
+  "title": "GuidedResearchExplanation",
+  "type": "object"
+}

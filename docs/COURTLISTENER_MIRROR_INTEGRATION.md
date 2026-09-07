@@ -7,6 +7,12 @@
 - Provider responsibilities: acquisition, storage, query execution, citation graph, serving, and raw-source provenance.
 - Consumer responsibilities: provider-neutral validation, normalization, treatment/currentness boundaries, and `ResearchSnapshot` semantics.
 
+The mirror remains a source-faithful Layer A canon. Lay-language expansion,
+semantic retrieval, aliases, segmentation, and ranking are disposable,
+versioned Layer B structures derived from source records; narrative-to-intent
+and qualification remain Layer C responsibilities of this repository. The
+mirror must not mutate authority meaning to accommodate pro-se searches.
+
 ## Service contract
 
 - Request schema: `schemas/provider-search-request-v1.schema.json`

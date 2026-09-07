@@ -1,0 +1,197 @@
+{
+  "$defs": {
+    "QueryClass": {
+      "enum": [
+        "DOCTRINAL_QUERY",
+        "CONTROLLING_AUTHORITY_QUERY",
+        "STATUTE_RULE_QUERY",
+        "FACT_PATTERN_QUERY",
+        "PROCEDURAL_POSTURE_QUERY",
+        "ADVERSE_AUTHORITY_QUERY",
+        "LIMITING_AUTHORITY_QUERY",
+        "CURRENTNESS_TREATMENT_QUERY",
+        "CITATION_GRAPH_QUERY",
+        "DEFINITION_TERMINOLOGY_QUERY"
+      ],
+      "title": "QueryClass",
+      "type": "string"
+    },
+    "ResearchQuery": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilities_required": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Capabilities Required",
+          "type": "array"
+        },
+        "court_hierarchy_constraints": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Court Hierarchy Constraints",
+          "type": "array"
+        },
+        "date_from": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date From"
+        },
+        "date_to": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date To"
+        },
+        "issue_id": {
+          "title": "Issue Id",
+          "type": "string"
+        },
+        "jurisdiction_constraints": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Jurisdiction Constraints",
+          "type": "array"
+        },
+        "query_class": {
+          "$ref": "#/$defs/QueryClass"
+        },
+        "query_id": {
+          "title": "Query Id",
+          "type": "string"
+        },
+        "query_variants": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Query Variants",
+          "type": "array"
+        },
+        "retrieval_mode": {
+          "$ref": "#/$defs/RetrievalMode"
+        },
+        "target_proposition": {
+          "title": "Target Proposition",
+          "type": "string"
+        },
+        "why_this_query_exists": {
+          "title": "Why This Query Exists",
+          "type": "string"
+        }
+      },
+      "required": [
+        "query_id",
+        "issue_id",
+        "query_class",
+        "retrieval_mode",
+        "why_this_query_exists",
+        "query_variants",
+        "target_proposition"
+      ],
+      "title": "ResearchQuery",
+      "type": "object"
+    },
+    "RetrievalMode": {
+      "enum": [
+        "DISCOVERY",
+        "QUALIFICATION"
+      ],
+      "title": "RetrievalMode",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "blocked_dimensions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Blocked Dimensions",
+      "type": "array"
+    },
+    "contract": {
+      "default": "nora.legal-research/ResearchPlan/1.0",
+      "title": "Contract",
+      "type": "string"
+    },
+    "intent_id": {
+      "title": "Intent Id",
+      "type": "string"
+    },
+    "plan_id": {
+      "title": "Plan Id",
+      "type": "string"
+    },
+    "provisional_assumptions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Provisional Assumptions",
+      "type": "array"
+    },
+    "queries": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ResearchQuery"
+      },
+      "title": "Queries",
+      "type": "array"
+    },
+    "research_budget": {
+      "default": 24,
+      "title": "Research Budget",
+      "type": "integer"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_narrative_sha256": {
+      "title": "Source Narrative Sha256",
+      "type": "string"
+    },
+    "stopping_conditions": {
+      "default": [
+        "controlling authority identified or explicitly blocked",
+        "adverse and limiting authority searches completed or explicitly blocked",
+        "authority hierarchy and procedural fit checked",
+        "currentness/treatment checked or explicitly unavailable",
+        "material conflicts and uncertainties surfaced"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Stopping Conditions",
+      "type": "array"
+    }
+  },
+  "required": [
+    "plan_id",
+    "intent_id",
+    "source_narrative_sha256"
+  ],
+  "title": "ResearchPlan",
+  "type": "object"
+}

@@ -1,0 +1,561 @@
+{
+  "$defs": {
+    "ClarificationQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "expected_research_impact": {
+          "title": "Expected Research Impact",
+          "type": "string"
+        },
+        "information_needed": {
+          "title": "Information Needed",
+          "type": "string"
+        },
+        "priority": {
+          "default": "HIGH",
+          "title": "Priority",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "question_id": {
+          "title": "Question Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "question",
+        "information_needed",
+        "expected_research_impact"
+      ],
+      "title": "ClarificationQuestion",
+      "type": "object"
+    },
+    "EvidenceCategory": {
+      "enum": [
+        "USER_ASSERTED_FACT",
+        "USER_QUESTION",
+        "USER_INTERPRETATION",
+        "UNKNOWN_OR_AMBIGUOUS_FACT",
+        "DOCUMENT_REFERENCE",
+        "DATE",
+        "PERSON_OR_ENTITY",
+        "LOCATION",
+        "COURT_OR_AGENCY",
+        "PROCEDURAL_EVENT"
+      ],
+      "title": "EvidenceCategory",
+      "type": "string"
+    },
+    "ExtractedDate": {
+      "additionalProperties": false,
+      "properties": {
+        "date_id": {
+          "title": "Date Id",
+          "type": "string"
+        },
+        "identity_sensitive": {
+          "default": false,
+          "title": "Identity Sensitive",
+          "type": "boolean"
+        },
+        "legally_material": {
+          "default": false,
+          "title": "Legally Material",
+          "type": "boolean"
+        },
+        "normalized_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Normalized Date"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "KNOWN"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "date_id",
+        "text"
+      ],
+      "title": "ExtractedDate",
+      "type": "object"
+    },
+    "GoverningSourceCandidate": {
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "issue_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Issue Id"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_kind": {
+          "title": "Source Kind",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "INFERRED"
+        }
+      },
+      "required": [
+        "source_id",
+        "description",
+        "source_kind"
+      ],
+      "title": "GoverningSourceCandidate",
+      "type": "object"
+    },
+    "IssueHypothesis": {
+      "additionalProperties": false,
+      "properties": {
+        "concept_id": {
+          "title": "Concept Id",
+          "type": "string"
+        },
+        "confidence": {
+          "title": "Confidence",
+          "type": "number"
+        },
+        "context_needed": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Context Needed",
+          "type": "array"
+        },
+        "domain": {
+          "title": "Domain",
+          "type": "string"
+        },
+        "issue": {
+          "title": "Issue",
+          "type": "string"
+        },
+        "issue_id": {
+          "title": "Issue Id",
+          "type": "string"
+        },
+        "jurisdiction_sensitive": {
+          "default": true,
+          "title": "Jurisdiction Sensitive",
+          "type": "boolean"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "legal_terms": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Legal Terms",
+          "type": "array"
+        },
+        "ontology_source": {
+          "default": "nora.general-lay-language/1.0",
+          "title": "Ontology Source",
+          "type": "string"
+        },
+        "ontology_version": {
+          "default": "1.0",
+          "title": "Ontology Version",
+          "type": "string"
+        },
+        "procedure_or_substance": {
+          "title": "Procedure Or Substance",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/IssueStatus",
+          "default": "ISSUE_HYPOTHESIS"
+        },
+        "subdomain": {
+          "title": "Subdomain",
+          "type": "string"
+        },
+        "subissue": {
+          "title": "Subissue",
+          "type": "string"
+        },
+        "trigger_fact_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Trigger Fact Ids",
+          "type": "array"
+        },
+        "why_inferred": {
+          "title": "Why Inferred",
+          "type": "string"
+        }
+      },
+      "required": [
+        "issue_id",
+        "concept_id",
+        "label",
+        "domain",
+        "subdomain",
+        "procedure_or_substance",
+        "issue",
+        "subissue",
+        "confidence",
+        "why_inferred"
+      ],
+      "title": "IssueHypothesis",
+      "type": "object"
+    },
+    "IssueStatus": {
+      "enum": [
+        "ISSUE_HYPOTHESIS",
+        "VERIFIED_RESEARCH_ISSUE",
+        "REJECTED_ISSUE",
+        "UNRESOLVED_ISSUE"
+      ],
+      "title": "IssueStatus",
+      "type": "string"
+    },
+    "JurisdictionResolution": {
+      "additionalProperties": false,
+      "properties": {
+        "country": {
+          "$ref": "#/$defs/ResolvedValue"
+        },
+        "county": {
+          "$ref": "#/$defs/ResolvedValue"
+        },
+        "court_system": {
+          "$ref": "#/$defs/ResolvedValue"
+        },
+        "matter_type": {
+          "$ref": "#/$defs/ResolvedValue"
+        },
+        "relevant_event_date": {
+          "$ref": "#/$defs/ResolvedValue"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolvedValue"
+        },
+        "trial_appellate_posture": {
+          "$ref": "#/$defs/ResolvedValue"
+        }
+      },
+      "title": "JurisdictionResolution",
+      "type": "object"
+    },
+    "NarrativeFact": {
+      "additionalProperties": false,
+      "properties": {
+        "adverse_signal": {
+          "default": false,
+          "title": "Adverse Signal",
+          "type": "boolean"
+        },
+        "category": {
+          "$ref": "#/$defs/EvidenceCategory",
+          "default": "USER_ASSERTED_FACT"
+        },
+        "fact_id": {
+          "title": "Fact Id",
+          "type": "string"
+        },
+        "materially_relevant": {
+          "default": false,
+          "title": "Materially Relevant",
+          "type": "boolean"
+        },
+        "source_span": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Span"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "KNOWN"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fact_id",
+        "text"
+      ],
+      "title": "NarrativeFact",
+      "type": "object"
+    },
+    "ResearchQuestion": {
+      "additionalProperties": false,
+      "properties": {
+        "issue_id": {
+          "title": "Issue Id",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "question_id": {
+          "title": "Question Id",
+          "type": "string"
+        },
+        "remains_hypothetical": {
+          "default": true,
+          "title": "Remains Hypothetical",
+          "type": "boolean"
+        },
+        "why_needed": {
+          "title": "Why Needed",
+          "type": "string"
+        }
+      },
+      "required": [
+        "question_id",
+        "issue_id",
+        "question",
+        "why_needed"
+      ],
+      "title": "ResearchQuestion",
+      "type": "object"
+    },
+    "ResolutionState": {
+      "enum": [
+        "KNOWN",
+        "INFERRED",
+        "UNKNOWN",
+        "CONFLICTING"
+      ],
+      "title": "ResolutionState",
+      "type": "string"
+    },
+    "ResolvedValue": {
+      "additionalProperties": false,
+      "properties": {
+        "alternatives": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Alternatives",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "state": {
+          "$ref": "#/$defs/ResolutionState",
+          "default": "UNKNOWN"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        }
+      },
+      "title": "ResolvedValue",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "clarifications_needed": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ClarificationQuestion"
+      },
+      "title": "Clarifications Needed",
+      "type": "array"
+    },
+    "contract": {
+      "default": "nora.legal-research/ResearchIntent/1.0",
+      "title": "Contract",
+      "type": "string"
+    },
+    "deadline_questions": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Deadline Questions",
+      "type": "array"
+    },
+    "disputed_facts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NarrativeFact"
+      },
+      "title": "Disputed Facts",
+      "type": "array"
+    },
+    "important_dates": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ExtractedDate"
+      },
+      "title": "Important Dates",
+      "type": "array"
+    },
+    "inferred_facts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NarrativeFact"
+      },
+      "title": "Inferred Facts",
+      "type": "array"
+    },
+    "intent_id": {
+      "title": "Intent Id",
+      "type": "string"
+    },
+    "issue_hypotheses": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/IssueHypothesis"
+      },
+      "title": "Issue Hypotheses",
+      "type": "array"
+    },
+    "jurisdiction": {
+      "$ref": "#/$defs/JurisdictionResolution"
+    },
+    "jurisdiction_state": {
+      "$ref": "#/$defs/ResolvedValue"
+    },
+    "known_facts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NarrativeFact"
+      },
+      "title": "Known Facts",
+      "type": "array"
+    },
+    "matter_type": {
+      "$ref": "#/$defs/ResolvedValue"
+    },
+    "potential_governing_sources": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/GoverningSourceCandidate"
+      },
+      "title": "Potential Governing Sources",
+      "type": "array"
+    },
+    "procedural_posture": {
+      "$ref": "#/$defs/ResolvedValue"
+    },
+    "research_constraints": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Research Constraints",
+      "type": "array"
+    },
+    "research_questions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ResearchQuestion"
+      },
+      "title": "Research Questions",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "source_narrative_sha256": {
+      "title": "Source Narrative Sha256",
+      "type": "string"
+    },
+    "unknown_facts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/NarrativeFact"
+      },
+      "title": "Unknown Facts",
+      "type": "array"
+    },
+    "urgency_flags": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Urgency Flags",
+      "type": "array"
+    },
+    "user_goal": {
+      "title": "User Goal",
+      "type": "string"
+    },
+    "user_problem_summary": {
+      "title": "User Problem Summary",
+      "type": "string"
+    }
+  },
+  "required": [
+    "intent_id",
+    "user_goal",
+    "user_problem_summary",
+    "jurisdiction",
+    "jurisdiction_state",
+    "procedural_posture",
+    "matter_type",
+    "source_narrative_sha256"
+  ],
+  "title": "ResearchIntent",
+  "type": "object"
+}
