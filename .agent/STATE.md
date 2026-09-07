@@ -6,7 +6,7 @@
   fixture lane.
 - Canonical tests: 71 passed, including lay-narrative and research-quality qualification vectors.
 - Public-law sidecar tests: 31 passed.
-- Public-demo tests: 1 passed in the current checkout.
+- Public-demo tests: 42 passed in the current checkout.
 - Generated schema check and `git diff --check`: passed.
 - `ruff` is unavailable in the environment and was not installed; it is an
   optional development extra, not a required release gate in `pyproject.toml`.

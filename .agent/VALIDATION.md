@@ -9,7 +9,7 @@
 | Same checker with `response-unavailable.json` | PASS — typed `PROVIDER_UNAVAILABLE` |
 | Same checker with `response-malformed.json` | PASS — rejected, exit 2 |
 | Sidecar `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src pytest -q -p no:cacheprovider` | PASS — 31 passed |
-| Public demo `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src pytest -q -rA` | PASS — 1 passed |
+| Public demo `PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=src pytest -q -rA` | PASS — 42 passed |
 | Sidecar image build `nora-public-law-sidecar:0.1.4` | PASS — digest `sha256:875757c63d604cb471d0dd86a58f2b66aa080335904f3b2d62452f05a9a35c65` |
 | Trivy sidecar scan | PASS — CRITICAL/HIGH/MEDIUM/LOW all 0 |
 | `ruff check .` / `python3 -m ruff check .` | SKIPPED — ruff unavailable; not installed because not a required release dependency |
