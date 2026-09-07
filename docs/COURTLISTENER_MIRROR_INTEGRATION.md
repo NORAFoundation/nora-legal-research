@@ -10,19 +10,21 @@
 ## Service contract
 
 - Request schema: `schemas/provider-search-request-v1.schema.json`
+- Canonical request schema alias: `schemas/authority-research-request-v1.schema.json`
+- Provider result schema: `schemas/provider-search-result-v1.schema.json`
 - Response schema: `schemas/provider-search-response-v1.schema.json`
 - Endpoint shape: versioned provider envelope. The current mirror checkout publishes a read-only MCP/stdio service; an approved broker or HTTP facade must return this envelope before consumption. The consumer does not parse mirror-native MCP payloads.
 - Contract version: `1`
-- Required request fields: research ID, jurisdiction, court scope, doctrinal issue, target proposition, query variants, bounded date range/limit.
+- Required request fields: research ID, jurisdiction, court scope, doctrinal issue, target proposition, query variants, bounded date range/limit, and requested capabilities.
 - Forbidden request content: party names, private facts, case-derived chronology, local paths, source text, or private identifiers.
 
 ## Provider semantics
 
 The provider returns bounded authority candidates and capability metadata. It must not be required to assert good law, currentness, treatment, or legal effect. Empty success, partial success, authentication failure, rate limiting, contract mismatch, and unavailable service remain distinct outcomes.
 
-Read-only inspection of mirror commit `057ded9` found an MCP/stdio tool surface whose native search result is not yet this versioned envelope. `McpMirrorTransport` is prepared for a qualified broker that emits the envelope; live provider integration remains blocked pending that handshake.
+Read-only inspection of mirror `origin/main` at `ca9201f` reports `COURTLISTENER_MIRROR_PROVIDER=BLOCKED_BOUNDED_LIVE_PROOF`. Its MCP/stdio provider mode emits the versioned envelope, but the mirror is not yet requalified for bounded live serving. `McpMirrorTransport` is prepared for the qualified broker boundary; live provider integration remains blocked pending the mirror handoff and qualification evidence.
 
-Every successful response should identify `provider_name`, `research_id`, and—when available—the underlying mirror `snapshot_id`/`snapshot_date` and service version. Missing snapshot identity limits reproducibility; it must not be fabricated.
+Every successful response identifies `provider_name`, `research_id`, `snapshot_id`, `snapshot_date`, capabilities, authorities, partial/truncated state, limitations, and provenance. Provenance may additionally identify service version, mirror Git SHA, query-plan hash, and retrieval time. Missing optional provenance reduces reproducibility; it must not be fabricated.
 
 ## Consumer behavior
 

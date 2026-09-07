@@ -2,12 +2,21 @@
   "provider_contract_version": 1,
   "provider_name": "COURTLISTENER_MIRROR",
   "service_version": "mirror-test-1",
+  "mirror_git_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
   "snapshot_id": "CL-2026-06-30",
   "snapshot_date": "2026-06-30",
   "research_id": "R-004",
   "capabilities": {"search": true, "court_metadata": true},
-  "authorities": [{"provider_record_id": "CL-A-1", "case_name": "Public v. State", "citation": "2026 WI App 1", "court": "Wisconsin Court of Appeals", "decision_date": "2026-01-15", "authority_status": "UNKNOWN", "binding_weight": "UNKNOWN", "procedural_fit": "UNKNOWN", "opinion_type": "majority", "provider_rank": 1}],
+  "authorities": [{"provider_record_id": "CL-A-1", "case_name": "Public v. State", "citation": "2026 WI App 1", "court": "Wisconsin Court of Appeals", "decision_date": "2026-01-15", "authority_status": "UNKNOWN", "binding_weight": "UNKNOWN", "procedural_fit": "UNKNOWN", "opinion_type": "majority", "provider_rank": 1, "metadata": {"provider_score": 0.9}}],
   "partial": false,
   "limitations": [],
-  "provenance": {"source": "synthetic-fixture"}
+  "provenance": {
+    "source": "synthetic-fixture",
+    "snapshot_id": "CL-2026-06-30",
+    "snapshot_date": "2026-06-30",
+    "service_version": "mirror-test-1",
+    "mirror_git_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "query_plan_hash": "429ae08a49f7d4ae83df33fc9ffdf4f8baf199f7fe67fe9754e30b154358d219",
+    "retrieved_at": "2026-07-01T00:00:00Z"
+  }
 }

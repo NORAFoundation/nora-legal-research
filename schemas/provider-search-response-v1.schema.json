@@ -1,5 +1,16 @@
 {
   "$defs": {
+    "OpinionType": {
+      "enum": [
+        "majority",
+        "concurrence",
+        "dissent",
+        "per_curiam",
+        "unknown"
+      ],
+      "title": "OpinionType",
+      "type": "string"
+    },
     "ProviderAuthorityCandidate": {
       "additionalProperties": false,
       "properties": {
@@ -42,19 +53,40 @@
           "title": "Exact Proposition"
         },
         "metadata": {
-          "additionalProperties": true,
-          "title": "Metadata",
-          "type": "object"
+          "$ref": "#/$defs/ProviderCandidateMetadata"
+        },
+        "opinion_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Opinion Id"
         },
         "opinion_type": {
-          "default": "UNKNOWN",
-          "title": "Opinion Type",
-          "type": "string"
+          "$ref": "#/$defs/OpinionType",
+          "default": "unknown"
         },
         "procedural_fit": {
           "default": "UNKNOWN",
           "title": "Procedural Fit",
           "type": "string"
+        },
+        "provider_cluster_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Cluster Id"
         },
         "provider_rank": {
           "anyOf": [
@@ -106,6 +138,161 @@
       ],
       "title": "ProviderAuthorityCandidate",
       "type": "object"
+    },
+    "ProviderCandidateMetadata": {
+      "additionalProperties": false,
+      "description": "Small, public-only metadata allowlist emitted by the mirror envelope.",
+      "properties": {
+        "provider_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Score"
+        }
+      },
+      "title": "ProviderCandidateMetadata",
+      "type": "object"
+    },
+    "ProviderProvenanceModel": {
+      "additionalProperties": false,
+      "properties": {
+        "limitations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "mirror_git_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mirror Git Sha"
+        },
+        "native_result_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Native Result Count"
+        },
+        "provider_contract_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Contract Version"
+        },
+        "query_class": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Class"
+        },
+        "query_plan_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Plan Hash"
+        },
+        "retrieved_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieved At"
+        },
+        "service_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Version"
+        },
+        "snapshot_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Date"
+        },
+        "snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Id"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source"
+        }
+      },
+      "title": "ProviderProvenanceModel",
+      "type": "object"
     }
   },
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -132,18 +319,27 @@
       "title": "Limitations",
       "type": "array"
     },
+    "mirror_git_sha": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Mirror Git Sha"
+    },
     "partial": {
       "default": false,
       "title": "Partial",
       "type": "boolean"
     },
     "provenance": {
-      "additionalProperties": true,
-      "title": "Provenance",
-      "type": "object"
+      "$ref": "#/$defs/ProviderProvenanceModel"
     },
     "provider_contract_version": {
-      "default": 1,
       "title": "Provider Contract Version",
       "type": "integer"
     },
@@ -168,33 +364,29 @@
       "title": "Service Version"
     },
     "snapshot_date": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Snapshot Date"
+      "title": "Snapshot Date",
+      "type": "string"
     },
     "snapshot_id": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ],
-      "default": null,
-      "title": "Snapshot Id"
+      "title": "Snapshot Id",
+      "type": "string"
+    },
+    "truncated": {
+      "default": false,
+      "title": "Truncated",
+      "type": "boolean"
     }
   },
   "required": [
+    "provider_contract_version",
     "provider_name",
-    "research_id"
+    "snapshot_id",
+    "snapshot_date",
+    "research_id",
+    "capabilities",
+    "authorities",
+    "limitations",
+    "provenance"
   ],
   "title": "ProviderSearchResponseModel",
   "type": "object"

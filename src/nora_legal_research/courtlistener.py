@@ -1,11 +1,14 @@
 from __future__ import annotations
 from typing import Any, Callable, Dict, Optional
-from nora_legal_research.contracts import AuthorityRecord, Citation, PrecedentialStatus
+from nora_legal_research.contracts import AuthorityRecord, Citation, OpinionType, PrecedentialStatus
 from nora_legal_research.providers import (
     AuthorityResearchRequest,
     ProviderCapabilities,
     ProviderSearchResult,
 )
+
+
+EXPLICIT_ADVERSE_RELATIONSHIPS = {"ADVERSE", "LIMITING", "DISTINGUISHING", "NEGATIVE_TREATMENT"}
 
 class CourtListenerNormalizer:
     """
@@ -33,21 +36,31 @@ class CourtListenerNormalizer:
 
     def normalize_authority(self, payload: Dict[str, Any], *, provider_record_id: str | None = None) -> AuthorityRecord:
         citation = self.normalize_opinion(payload)
-        status = payload.get("precedential_status", "unknown")
-        if status not in {item.value for item in PrecedentialStatus}:
-            status = "unknown"
+        opinion_type = str(payload.get("opinion_type", "unknown")).lower()
+        if opinion_type not in {item.value for item in OpinionType}:
+            opinion_type = OpinionType.UNKNOWN.value
         return AuthorityRecord(
             **citation.model_dump(),
             authority_id=provider_record_id,
             case_name=payload.get("case_name") or payload.get("caseName"),
             court=payload.get("court") if isinstance(payload.get("court"), str) else None,
             decision_date=(payload.get("dateFiled") or payload.get("date_filed") or payload.get("date")),
-            precedential_status=status,
+            precedential_status=PrecedentialStatus.UNKNOWN,
             exact_proposition=payload.get("exact_proposition"),
             procedural_posture=payload.get("procedural_posture"),
-            adverse_relationship=payload.get("relationship"),
+            provider_relationship=payload.get("relationship") or payload.get("adverse_relationship"),
+            adverse_relationship=(payload.get("relationship") or payload.get("adverse_relationship"))
+            if (str(payload.get("precedential_status", "")).upper() in EXPLICIT_ADVERSE_RELATIONSHIPS
+                or str(payload.get("authority_status", "")).upper() in EXPLICIT_ADVERSE_RELATIONSHIPS
+                or str(payload.get("relationship", "")).upper() in EXPLICIT_ADVERSE_RELATIONSHIPS
+                or str(payload.get("adverse_relationship", "")).upper() in EXPLICIT_ADVERSE_RELATIONSHIPS)
+            else None,
+            opinion_type=opinion_type,
             provider="COURTLISTENER",
             provider_record_id=provider_record_id,
+            provider_cluster_id=payload.get("cluster_id") or payload.get("clusterId"),
+            opinion_id=payload.get("opinion_id") or payload.get("opinionId"),
+            provider_rank=payload.get("provider_rank") or payload.get("rank"),
             limitations=["Provider retrieval does not establish treatment or currentness."],
         )
 

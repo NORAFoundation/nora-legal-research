@@ -36,6 +36,18 @@ make test
 python examples/demo.py
 ```
 
+Validate a provider envelope without starting the application:
+
+```bash
+PYTHONPATH=src python3 -m nora_legal_research.provider_contract_check \
+  --response fixtures/provider-contract/response-supporting.json
+```
+
+The versioned provider request/result/response schemas and the
+provider-neutral `ResearchSnapshot` schema are generated from the canonical
+Pydantic models with `python3 scripts/generate_schemas.py --check` enforcing
+staleness.
+
 ## Source provenance
 
 Legacy NORA repositories are component sources, not authorities. Migrated units are recorded in `SOURCE_PROVENANCE.yaml`.

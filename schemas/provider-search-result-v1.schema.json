@@ -1,0 +1,121 @@
+{
+  "$defs": {
+    "ProviderCapabilities": {
+      "additionalProperties": false,
+      "properties": {
+        "citation_graph_inbound": {
+          "default": false,
+          "title": "Citation Graph Inbound",
+          "type": "boolean"
+        },
+        "citation_graph_outbound": {
+          "default": false,
+          "title": "Citation Graph Outbound",
+          "type": "boolean"
+        },
+        "cluster_retrieval": {
+          "default": false,
+          "title": "Cluster Retrieval",
+          "type": "boolean"
+        },
+        "court_metadata": {
+          "default": false,
+          "title": "Court Metadata",
+          "type": "boolean"
+        },
+        "opinion_retrieval": {
+          "default": false,
+          "title": "Opinion Retrieval",
+          "type": "boolean"
+        },
+        "search": {
+          "default": false,
+          "title": "Search",
+          "type": "boolean"
+        },
+        "unsupported": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Unsupported",
+          "type": "array"
+        }
+      },
+      "title": "ProviderCapabilities",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Validated provider-neutral result after a transport envelope is consumed.",
+  "properties": {
+    "access_mode": {
+      "default": "FIXTURE",
+      "title": "Access Mode",
+      "type": "string"
+    },
+    "authorities": {
+      "default": [],
+      "items": {
+        "additionalProperties": true,
+        "type": "object"
+      },
+      "title": "Authorities",
+      "type": "array"
+    },
+    "capabilities": {
+      "$ref": "#/$defs/ProviderCapabilities"
+    },
+    "limitations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "partial": {
+      "default": false,
+      "title": "Partial",
+      "type": "boolean"
+    },
+    "provenance": {
+      "additionalProperties": true,
+      "title": "Provenance",
+      "type": "object"
+    },
+    "provider": {
+      "title": "Provider",
+      "type": "string"
+    },
+    "provider_contract_version": {
+      "default": 1,
+      "title": "Provider Contract Version",
+      "type": "integer"
+    },
+    "research_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Research Id"
+    },
+    "truncated": {
+      "default": false,
+      "title": "Truncated",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "provider",
+    "capabilities"
+  ],
+  "title": "ProviderSearchResult",
+  "type": "object"
+}

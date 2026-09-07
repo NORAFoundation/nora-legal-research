@@ -1,0 +1,11 @@
+{
+  "provider_contract_version": 1,
+  "provider_name": "COURTLISTENER_MIRROR",
+  "research_id": "R-004",
+  "error": {
+    "code": "PROVIDER_UNAVAILABLE",
+    "retryable": true,
+    "http_status": 503,
+    "access_mode": "MIRROR_API"
+  }
+}

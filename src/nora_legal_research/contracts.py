@@ -2,7 +2,7 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, List, Optional
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 class AuthorityType(str, Enum):
     CONSTITUTIONAL = "constitutional"
@@ -34,6 +34,23 @@ class VerificationStatus(str, Enum):
     PARTIAL = "partial"
     NOT_AVAILABLE = "not_available"
 
+
+class OpinionType(str, Enum):
+    MAJORITY = "majority"
+    CONCURRENCE = "concurrence"
+    DISSENT = "dissent"
+    PER_CURIAM = "per_curiam"
+    UNKNOWN = "unknown"
+
+
+class RetrievalStatus(str, Enum):
+    COMPLETE = "complete"
+    EMPTY = "empty"
+    PARTIAL = "partial"
+
+
+RESEARCH_SNAPSHOT_CONTRACT = "nora.legal-research/ResearchSnapshot/1.0"
+
 class CourtLevel(str, Enum):
     FEDERAL_SUPREME = "federal_supreme"
     FEDERAL_APPELLATE = "federal_appellate"
@@ -43,17 +60,20 @@ class CourtLevel(str, Enum):
     STATE_TRIAL = "state_trial"
 
 class AuthorityScore(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     citation: str
     authority_type: AuthorityType = AuthorityType.SECONDARY
     precedential_status: PrecedentialStatus = PrecedentialStatus.PERSUASIVE
     score: float = 0.5
     is_binding: bool = False
 class Jurisdiction(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     code: str  # e.g. US, US-WI, US-MN, US-8th-Cir
     level: str  # federal_supreme, federal_appellate, state_supreme, state_appellate, trial
     name: str
 
 class Citation(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     citation_text: str
     volume: Optional[int] = None
     reporter: Optional[str] = None
@@ -76,15 +96,21 @@ class AuthorityRecord(Citation):
     exact_proposition: Optional[str] = None
     procedural_posture: Optional[str] = None
     pinpoint: Optional[str] = None
+    provider_relationship: Optional[str] = None
     quote_verification: VerificationStatus = VerificationStatus.NOT_AVAILABLE
     treatment_status: TreatmentStatus = TreatmentStatus.UNKNOWN
     adverse_relationship: Optional[str] = None
     provider: Optional[str] = None
     provider_record_id: Optional[str] = None
+    provider_cluster_id: Optional[str] = None
+    opinion_id: Optional[str] = None
+    opinion_type: OpinionType = OpinionType.UNKNOWN
+    provider_rank: Optional[int] = None
     retrieved_at: Optional[datetime] = None
     limitations: List[str] = Field(default_factory=list)
 
 class QuoteSpan(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     span_id: str
     citation_text: str
     exact_quote: str
@@ -93,16 +119,24 @@ class QuoteSpan(BaseModel):
 
 
 class Provenance(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     provider: str
     source_kind: str
     source_uri: Optional[str] = None
     source_record_id: Optional[str] = None
-    retrieved_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    retrieved_at: Optional[datetime] = None
+    snapshot_id: Optional[str] = None
+    snapshot_date: Optional[str] = None
+    service_version: Optional[str] = None
+    mirror_git_sha: Optional[str] = None
+    provider_contract_version: Optional[int] = None
+    query_plan_hash: Optional[str] = None
     digest: Optional[str] = None
     limitations: List[str] = Field(default_factory=list)
 
 
 class ProviderMetadata(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     provider_name: str
     provider_version: Optional[str] = None
     access_mode: str
@@ -111,15 +145,28 @@ class ProviderMetadata(BaseModel):
     snapshot_id: Optional[str] = None
     snapshot_date: Optional[str] = None
     service_version: Optional[str] = None
+    mirror_git_sha: Optional[str] = None
+    provider_contract_version: Optional[int] = None
+    query_plan_hash: Optional[str] = None
 
 
 class QueryPlanReference(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     query_id: str
     variants: List[str] = Field(default_factory=list)
     filters: Dict[str, str] = Field(default_factory=dict)
+    jurisdiction: Optional[str] = None
+    court_level: Optional[str] = None
+    date_range: Optional[str] = None
+    date_from: Optional[str] = None
+    date_to: Optional[str] = None
+    limit: Optional[int] = None
+    capabilities_requested: List[str] = Field(default_factory=list)
+    query_plan_hash: Optional[str] = None
 
 
 class CurrentnessAssessment(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     status: TreatmentStatus = TreatmentStatus.UNKNOWN
     checked_at: Optional[datetime] = None
     unresolved_questions: List[str] = Field(default_factory=list)
@@ -129,6 +176,8 @@ class ResearchSnapshot(BaseModel):
 
     model_config = ConfigDict(extra="forbid")
     snapshot_id: str
+    contract: str = RESEARCH_SNAPSHOT_CONTRACT
+    consumer_snapshot_id: Optional[str] = None
     query: str
     jurisdiction: Jurisdiction
     authorities: List[AuthorityRecord] = Field(default_factory=list)
@@ -136,6 +185,7 @@ class ResearchSnapshot(BaseModel):
     status_warnings: List[str] = Field(default_factory=list)
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     schema_version: str = "1.0"
+    retrieval_status: RetrievalStatus = RetrievalStatus.COMPLETE
     research_id: Optional[str] = None
     checked_at: Optional[datetime] = None
     court_hierarchy_scope: Optional[str] = None
@@ -165,3 +215,25 @@ class ResearchSnapshot(BaseModel):
             else:
                 converted.append(item)
         return converted
+
+    @field_validator("schema_version")
+    @classmethod
+    def require_supported_schema_version(cls, value: str) -> str:
+        if value != "1.0":
+            raise ValueError("unsupported ResearchSnapshot schema version")
+        return value
+
+    @field_validator("contract")
+    @classmethod
+    def require_supported_contract(cls, value: str) -> str:
+        if value != RESEARCH_SNAPSHOT_CONTRACT:
+            raise ValueError("unsupported ResearchSnapshot contract")
+        return value
+
+    @model_validator(mode="after")
+    def keep_snapshot_identities_distinct(self) -> "ResearchSnapshot":
+        if self.consumer_snapshot_id is not None and self.consumer_snapshot_id != self.snapshot_id:
+            raise ValueError("consumer snapshot identity mismatch")
+        if self.provider is not None and self.provider.snapshot_id == self.snapshot_id:
+            raise ValueError("consumer snapshot_id must not reuse provider snapshot identity")
+        return self

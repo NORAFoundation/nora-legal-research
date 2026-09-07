@@ -5,12 +5,15 @@ import json
 from pathlib import Path
 
 from nora_legal_research.contracts import ResearchSnapshot
-from nora_legal_research.provider_contract import ProviderSearchRequestModel, ProviderSearchResponseModel
+from nora_legal_research.provider_contract import AuthorityResearchRequest, ProviderSearchResponseModel
+from nora_legal_research.providers import ProviderSearchResult
 
 
 SCHEMAS = {
     "research-snapshot-v1.schema.json": ResearchSnapshot,
-    "provider-search-request-v1.schema.json": ProviderSearchRequestModel,
+    "provider-search-request-v1.schema.json": AuthorityResearchRequest,
+    "authority-research-request-v1.schema.json": AuthorityResearchRequest,
+    "provider-search-result-v1.schema.json": ProviderSearchResult,
     "provider-search-response-v1.schema.json": ProviderSearchResponseModel,
 }
 

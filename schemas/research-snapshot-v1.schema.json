@@ -99,6 +99,22 @@
           "title": "Normalized Cite",
           "type": "string"
         },
+        "opinion_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Opinion Id"
+        },
+        "opinion_type": {
+          "$ref": "#/$defs/OpinionType",
+          "default": "unknown"
+        },
         "page": {
           "anyOf": [
             {
@@ -151,6 +167,30 @@
           "default": null,
           "title": "Provider"
         },
+        "provider_cluster_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Cluster Id"
+        },
+        "provider_rank": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Rank"
+        },
         "provider_record_id": {
           "anyOf": [
             {
@@ -162,6 +202,18 @@
           ],
           "default": null,
           "title": "Provider Record Id"
+        },
+        "provider_relationship": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Relationship"
         },
         "quote_verification": {
           "$ref": "#/$defs/VerificationStatus",
@@ -242,6 +294,7 @@
       "type": "string"
     },
     "CurrentnessAssessment": {
+      "additionalProperties": false,
       "properties": {
         "checked_at": {
           "anyOf": [
@@ -272,6 +325,7 @@
       "type": "object"
     },
     "Jurisdiction": {
+      "additionalProperties": false,
       "properties": {
         "code": {
           "title": "Code",
@@ -294,6 +348,17 @@
       "title": "Jurisdiction",
       "type": "object"
     },
+    "OpinionType": {
+      "enum": [
+        "majority",
+        "concurrence",
+        "dissent",
+        "per_curiam",
+        "unknown"
+      ],
+      "title": "OpinionType",
+      "type": "string"
+    },
     "PrecedentialStatus": {
       "enum": [
         "binding",
@@ -307,6 +372,7 @@
       "type": "string"
     },
     "Provenance": {
+      "additionalProperties": false,
       "properties": {
         "digest": {
           "anyOf": [
@@ -327,14 +393,94 @@
           "title": "Limitations",
           "type": "array"
         },
+        "mirror_git_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mirror Git Sha"
+        },
         "provider": {
           "title": "Provider",
           "type": "string"
         },
+        "provider_contract_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Contract Version"
+        },
+        "query_plan_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Plan Hash"
+        },
         "retrieved_at": {
-          "format": "date-time",
-          "title": "Retrieved At",
-          "type": "string"
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieved At"
+        },
+        "service_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Service Version"
+        },
+        "snapshot_date": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Date"
+        },
+        "snapshot_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot Id"
         },
         "source_kind": {
           "title": "Source Kind",
@@ -373,6 +519,7 @@
       "type": "object"
     },
     "ProviderMetadata": {
+      "additionalProperties": false,
       "properties": {
         "access_mode": {
           "title": "Access Mode",
@@ -392,6 +539,30 @@
           "title": "Capabilities Used",
           "type": "array"
         },
+        "mirror_git_sha": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mirror Git Sha"
+        },
+        "provider_contract_version": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Provider Contract Version"
+        },
         "provider_name": {
           "title": "Provider Name",
           "type": "string"
@@ -407,6 +578,18 @@
           ],
           "default": null,
           "title": "Provider Version"
+        },
+        "query_plan_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Plan Hash"
         },
         "service_version": {
           "anyOf": [
@@ -453,7 +636,63 @@
       "type": "object"
     },
     "QueryPlanReference": {
+      "additionalProperties": false,
       "properties": {
+        "capabilities_requested": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Capabilities Requested",
+          "type": "array"
+        },
+        "court_level": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Court Level"
+        },
+        "date_from": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date From"
+        },
+        "date_range": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date Range"
+        },
+        "date_to": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date To"
+        },
         "filters": {
           "additionalProperties": {
             "type": "string"
@@ -461,9 +700,45 @@
           "title": "Filters",
           "type": "object"
         },
+        "jurisdiction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jurisdiction"
+        },
+        "limit": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Limit"
+        },
         "query_id": {
           "title": "Query Id",
           "type": "string"
+        },
+        "query_plan_hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Query Plan Hash"
         },
         "variants": {
           "items": {
@@ -480,6 +755,7 @@
       "type": "object"
     },
     "QuoteSpan": {
+      "additionalProperties": false,
       "properties": {
         "citation_text": {
           "title": "Citation Text",
@@ -518,6 +794,15 @@
       ],
       "title": "QuoteSpan",
       "type": "object"
+    },
+    "RetrievalStatus": {
+      "enum": [
+        "complete",
+        "empty",
+        "partial"
+      ],
+      "title": "RetrievalStatus",
+      "type": "string"
     },
     "TreatmentStatus": {
       "enum": [
@@ -582,6 +867,23 @@
       ],
       "default": null,
       "title": "Confidence"
+    },
+    "consumer_snapshot_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Consumer Snapshot Id"
+    },
+    "contract": {
+      "default": "nora.legal-research/ResearchSnapshot/1.0",
+      "title": "Contract",
+      "type": "string"
     },
     "court_hierarchy_scope": {
       "anyOf": [
@@ -700,6 +1002,10 @@
       ],
       "default": null,
       "title": "Research Id"
+    },
+    "retrieval_status": {
+      "$ref": "#/$defs/RetrievalStatus",
+      "default": "complete"
     },
     "schema_version": {
       "default": "1.0",

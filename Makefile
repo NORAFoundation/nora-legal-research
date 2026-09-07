@@ -8,6 +8,7 @@ doctor:
 
 validate:
 	$(PY) scripts/validate_scaffold.py
+	PYTHONPATH=src $(PY) scripts/generate_schemas.py --check
 	$(PY) -m compileall -q src tests
 
 test:
