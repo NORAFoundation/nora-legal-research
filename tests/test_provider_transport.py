@@ -175,3 +175,11 @@ def test_provider_contract_version_fails_closed_at_model_boundary() -> None:
     body["provider_contract_version"] = 2
     with pytest.raises(Exception):
         ProviderSearchResponseModel.model_validate(body)
+
+
+def test_provider_contract_accepts_exact_mirror_git_commit_sha() -> None:
+    body = response("response-empty.json").model_dump(mode="json")
+    body["mirror_git_sha"] = "b" * 40
+    body["provenance"]["mirror_git_sha"] = "b" * 40
+    validated = ProviderSearchResponseModel.model_validate(body)
+    assert validated.mirror_git_sha == "b" * 40

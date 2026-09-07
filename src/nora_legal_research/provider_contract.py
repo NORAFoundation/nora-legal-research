@@ -29,6 +29,7 @@ _SAFE_TEXT_TOKEN = re.compile(r"[\x00-\x1f\x7f]|(?:^|\s)(?:private|confidential|
 _EMAIL = re.compile(r"\b[^\s@]+@[^\s@]+\.[^\s@]+\b")
 _ISO_DATE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
 _SHA256 = re.compile(r"^[0-9a-f]{64}$")
+_GIT_OR_SHA256 = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 
 
 def _safe_public_text(value: str, *, field: str, maximum: int = 512) -> str:
@@ -83,8 +84,8 @@ class ProviderProvenanceModel(BaseModel):
     @field_validator("mirror_git_sha")
     @classmethod
     def validate_mirror_git_sha(cls, value: Optional[str]) -> Optional[str]:
-        if value is not None and not _SHA256.fullmatch(value):
-            raise ValueError("mirror_git_sha must be a lowercase SHA-256")
+        if value is not None and not _GIT_OR_SHA256.fullmatch(value):
+            raise ValueError("mirror_git_sha must be a lowercase Git SHA or SHA-256")
         return value
 
     @field_validator("query_plan_hash")
@@ -305,8 +306,8 @@ class ProviderSearchResponseModel(BaseModel):
     @field_validator("mirror_git_sha")
     @classmethod
     def valid_mirror_git_sha(cls, value: Optional[str]) -> Optional[str]:
-        if value is not None and not _SHA256.fullmatch(value):
-            raise ValueError("mirror_git_sha must be a lowercase SHA-256")
+        if value is not None and not _GIT_OR_SHA256.fullmatch(value):
+            raise ValueError("mirror_git_sha must be a lowercase Git SHA or SHA-256")
         return value
 
     @field_validator("snapshot_date")
