@@ -32,6 +32,20 @@ needed context, and unresolved questions.  Every query must retain its class,
 purpose, constraints, variants, capabilities, and retrieval mode.  A provider
 failure or empty result is never a no-law conclusion.
 
+Facts and sources use separate epistemic labels: `USER_REPORTED`,
+`USER_INTERPRETATION`, `INFERRED`, `DOCUMENT_REPORTED`,
+`PROVIDER_RETRIEVED`, `PRIMARY_SOURCE_VERIFIED`, `DISPUTED`, and `UNKNOWN`.
+Retrieval is evidence of retrieval, not proof of a legal proposition.
+
+Authority qualification is multidimensional. Identity, jurisdiction, hierarchy,
+opinion voice, procedural fit, quote verification, currentness, and treatment
+must each be assessed. An authority cannot be `QUALIFIED` merely because it was
+retrieved.
+
+Research completeness is multidimensional as well. `COMPLETE` requires every
+required dimension to be complete and an explicit stopping basis. Missing or
+blocked dimensions remain auditable as `UNKNOWN`, `PARTIAL`, or `BLOCKED`.
+
 ## Shared evidence
 
 Lay and professional modes use the same source-faithful mirror, derived
@@ -39,3 +53,9 @@ retrieval records, provider contract, authority identity, opinion voice,
 currentness, treatment, quote verification, adverse-authority preservation, and
 human review requirements.  Simplification is an interaction concern, not a
 lower research standard.
+
+The professional research record is converted to a non-lawyer explanation by
+separate reported-fact, independently-verified-finding, and unresolved/
+disputed sections. The explanation may simplify language and explain why a
+clarification matters, but it cannot relabel a reported fact as verified or
+hide an incomplete research dimension.

@@ -26,3 +26,14 @@ network evidence also remain separate gates.
 The canonical compiler therefore emits abstract requests and preserves all
 unknowns.  It does not compensate for missing provider capabilities by
 inventing authority status or silently broadening jurisdiction.
+
+## Capability-to-quality mapping
+
+| Provider capability | Quality dimension affected | If unavailable |
+| --- | --- | --- |
+| stable opinion/cluster identity | authority identity, deduplication | qualification remains partial |
+| court metadata and hierarchy | jurisdiction, hierarchy | controlling-authority gate is blocked |
+| opinion text/pinpoints | quote verification, opinion voice | quote status remains not available |
+| citation graph | adverse/limiting search, citation follow-up | graph dimension remains partial |
+| treatment/currentness signal | currentness/treatment | status remains unknown; no good-law claim |
+| bounded repeated search | iterative discovery/qualification | research budget may stop as partial |

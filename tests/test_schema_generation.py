@@ -32,5 +32,11 @@ def test_required_canonical_schema_vectors_exist() -> None:
         "research-plan-v1.schema.json",
         "guided-research-explanation-v1.schema.json",
         "research-quality-assessment-v1.schema.json",
+        "research-completeness-v1.schema.json",
+        "authority-qualification-v1.schema.json",
+        "fact-evidence-v1.schema.json",
+        "source-evidence-v1.schema.json",
+        "professional-research-record-v1.schema.json",
+        "non-lawyer-guided-explanation-v1.schema.json",
     }
     assert expected.issubset({path.name for path in (ROOT / "schemas").glob("*.json")})

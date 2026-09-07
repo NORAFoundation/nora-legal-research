@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "EpistemicStatus": {
+      "enum": [
+        "USER_REPORTED",
+        "USER_INTERPRETATION",
+        "INFERRED",
+        "DOCUMENT_REPORTED",
+        "PROVIDER_RETRIEVED",
+        "PRIMARY_SOURCE_VERIFIED",
+        "DISPUTED",
+        "UNKNOWN"
+      ],
+      "title": "EpistemicStatus",
+      "type": "string"
+    },
+    "SourceType": {
+      "enum": [
+        "USER_NARRATIVE",
+        "USER_DOCUMENT",
+        "PRIMARY_AUTHORITY",
+        "PROVIDER_METADATA",
+        "SECONDARY_SOURCE",
+        "REASONING_RECORD"
+      ],
+      "title": "SourceType",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "epistemic_status": {
+      "$ref": "#/$defs/EpistemicStatus",
+      "default": "UNKNOWN"
+    },
+    "limitations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "locator": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Locator"
+    },
+    "provenance": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Provenance",
+      "type": "array"
+    },
+    "public": {
+      "default": false,
+      "title": "Public",
+      "type": "boolean"
+    },
+    "source_id": {
+      "title": "Source Id",
+      "type": "string"
+    },
+    "source_type": {
+      "$ref": "#/$defs/SourceType"
+    },
+    "supports_fact_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Supports Fact Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "source_id",
+    "source_type"
+  ],
+  "title": "SourceEvidence",
+  "type": "object"
+}

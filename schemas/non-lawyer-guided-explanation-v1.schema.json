@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "explanation_id": {
+      "title": "Explanation Id",
+      "type": "string"
+    },
+    "independently_verified_findings": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Independently Verified Findings",
+      "type": "array"
+    },
+    "next_research_steps": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Next Research Steps",
+      "type": "array"
+    },
+    "professional_record_id": {
+      "title": "Professional Record Id",
+      "type": "string"
+    },
+    "reported_facts": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Reported Facts",
+      "type": "array"
+    },
+    "research_standard_note": {
+      "default": "The explanation is simplified for readability; the underlying research standard is unchanged.",
+      "title": "Research Standard Note",
+      "type": "string"
+    },
+    "unresolved_or_disputed": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Or Disputed",
+      "type": "array"
+    },
+    "user_summary": {
+      "title": "User Summary",
+      "type": "string"
+    },
+    "why_clarification_matters": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Why Clarification Matters",
+      "type": "array"
+    }
+  },
+  "required": [
+    "explanation_id",
+    "professional_record_id",
+    "user_summary"
+  ],
+  "title": "NonLawyerGuidedExplanation",
+  "type": "object"
+}

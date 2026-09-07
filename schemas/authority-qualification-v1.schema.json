@@ -1,0 +1,109 @@
+{
+  "$defs": {
+    "AssessmentStatus": {
+      "enum": [
+        "VERIFIED",
+        "SUPPORTED",
+        "UNVERIFIED",
+        "UNKNOWN",
+        "NOT_AVAILABLE",
+        "BLOCKED",
+        "CONTRADICTED"
+      ],
+      "title": "AssessmentStatus",
+      "type": "string"
+    },
+    "AuthorityQualificationStatus": {
+      "enum": [
+        "RETRIEVED",
+        "PROVISIONAL",
+        "QUALIFIED",
+        "PARTIAL",
+        "BLOCKED"
+      ],
+      "title": "AuthorityQualificationStatus",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authority_id": {
+      "title": "Authority Id",
+      "type": "string"
+    },
+    "currentness": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    },
+    "evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "hierarchy": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    },
+    "identity": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    },
+    "jurisdiction": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    },
+    "limitations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "opinion_voice": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    },
+    "procedural_fit": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    },
+    "qualification_status": {
+      "$ref": "#/$defs/AuthorityQualificationStatus",
+      "default": "PROVISIONAL"
+    },
+    "quote_verification": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "NOT_AVAILABLE"
+    },
+    "retrieval": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    },
+    "source_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Id"
+    },
+    "treatment": {
+      "$ref": "#/$defs/AssessmentStatus",
+      "default": "UNKNOWN"
+    }
+  },
+  "required": [
+    "authority_id"
+  ],
+  "title": "AuthorityQualification",
+  "type": "object"
+}

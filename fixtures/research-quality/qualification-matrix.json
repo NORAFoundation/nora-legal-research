@@ -1,0 +1,17 @@
+{
+  "id": "research-quality-partial-001",
+  "research_id": "R-004",
+  "dimensions": [
+    {"dimension": "JURISDICTION", "status": "COMPLETE", "basis": "Synthetic state and court record"},
+    {"dimension": "FACTS", "status": "COMPLETE", "basis": "Reported facts and primary document"},
+    {"dimension": "PROCEDURAL_POSTURE", "status": "COMPLETE", "basis": "Docket posture fixture"},
+    {"dimension": "CONTROLLING_AUTHORITY", "status": "COMPLETE", "basis": "Synthetic controlling opinion"},
+    {"dimension": "GOVERNING_TEXT", "status": "COMPLETE", "basis": "Synthetic rule text"},
+    {"dimension": "AUTHORITY_HIERARCHY", "status": "COMPLETE", "basis": "Synthetic court hierarchy"},
+    {"dimension": "ADVERSE_AUTHORITY", "status": "COMPLETE", "basis": "Adverse search completed"},
+    {"dimension": "LIMITING_AUTHORITY", "status": "COMPLETE", "basis": "Limiting search completed"},
+    {"dimension": "QUOTE_VERIFICATION", "status": "COMPLETE", "basis": "Primary text quote checked"},
+    {"dimension": "CURRENTNESS_TREATMENT", "status": "BLOCKED", "basis": "No qualified citator fixture", "blocking_reason": "Treatment provider unavailable"},
+    {"dimension": "APPLICATION", "status": "PARTIAL", "basis": "Fact application awaits treatment review"}
+  ]
+}

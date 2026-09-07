@@ -14,6 +14,14 @@ from nora_legal_research.narrative_compiler import (
 )
 from nora_legal_research.provider_contract import AuthorityResearchRequest, ProviderSearchResponseModel
 from nora_legal_research.providers import ProviderSearchResult
+from nora_legal_research.research_quality import (
+    AuthorityQualification,
+    FactEvidence,
+    NonLawyerGuidedExplanation,
+    ProfessionalResearchRecord,
+    ResearchCompleteness,
+    SourceEvidence,
+)
 
 
 SCHEMAS = {
@@ -27,6 +35,12 @@ SCHEMAS = {
     "research-plan-v1.schema.json": ResearchPlan,
     "guided-research-explanation-v1.schema.json": GuidedResearchExplanation,
     "research-quality-assessment-v1.schema.json": ResearchQualityAssessment,
+    "research-completeness-v1.schema.json": ResearchCompleteness,
+    "authority-qualification-v1.schema.json": AuthorityQualification,
+    "fact-evidence-v1.schema.json": FactEvidence,
+    "source-evidence-v1.schema.json": SourceEvidence,
+    "professional-research-record-v1.schema.json": ProfessionalResearchRecord,
+    "non-lawyer-guided-explanation-v1.schema.json": NonLawyerGuidedExplanation,
 }
 
 

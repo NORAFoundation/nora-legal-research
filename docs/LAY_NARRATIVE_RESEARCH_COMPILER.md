@@ -106,6 +106,12 @@ clarification is needed.  Professional and lay interactions use the same
 source corpus, authority hierarchy, verification rules, and `ResearchSnapshot`
 semantics; only interaction and explanation differ.
 
+The downstream `ProfessionalResearchRecord` carries fact/source epistemology,
+authority qualification dimensions, and a multidimensional completeness
+assessment. `NonLawyerGuidedExplanation` exposes those results in plain
+language using separate reported, verified, and unresolved sections. It is a
+presentation boundary, not a lower evidentiary standard.
+
 ## Qualification status
 
 The deterministic compiler and synthetic vectors qualify issue discovery,

@@ -1,0 +1,66 @@
+{
+  "$defs": {
+    "EpistemicStatus": {
+      "enum": [
+        "USER_REPORTED",
+        "USER_INTERPRETATION",
+        "INFERRED",
+        "DOCUMENT_REPORTED",
+        "PROVIDER_RETRIEVED",
+        "PRIMARY_SOURCE_VERIFIED",
+        "DISPUTED",
+        "UNKNOWN"
+      ],
+      "title": "EpistemicStatus",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "adverse_to_user_position": {
+      "default": false,
+      "title": "Adverse To User Position",
+      "type": "boolean"
+    },
+    "epistemic_status": {
+      "$ref": "#/$defs/EpistemicStatus"
+    },
+    "fact_id": {
+      "title": "Fact Id",
+      "type": "string"
+    },
+    "materiality": {
+      "default": "UNKNOWN",
+      "title": "Materiality",
+      "type": "string"
+    },
+    "source_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Ids",
+      "type": "array"
+    },
+    "statement": {
+      "title": "Statement",
+      "type": "string"
+    },
+    "verification_limitations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Verification Limitations",
+      "type": "array"
+    }
+  },
+  "required": [
+    "fact_id",
+    "statement",
+    "epistemic_status"
+  ],
+  "title": "FactEvidence",
+  "type": "object"
+}
