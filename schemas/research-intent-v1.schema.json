@@ -98,6 +98,30 @@
     "GoverningSourceCandidate": {
       "additionalProperties": false,
       "properties": {
+        "authority_level": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Authority Level"
+        },
+        "currentness_capability": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Currentness Capability"
+        },
         "description": {
           "title": "Description",
           "type": "string"
@@ -113,6 +137,18 @@
           ],
           "default": null,
           "title": "Issue Id"
+        },
+        "official_status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Official Status"
         },
         "source_id": {
           "title": "Source Id",

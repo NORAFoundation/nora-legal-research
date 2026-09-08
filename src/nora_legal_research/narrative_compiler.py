@@ -294,6 +294,9 @@ class GoverningSourceCandidate(BaseModel):
     source_kind: str
     issue_id: Optional[str] = None
     status: ResolutionState = ResolutionState.INFERRED
+    official_status: Optional[str] = None
+    authority_level: Optional[str] = None
+    currentness_capability: Optional[str] = None
 
 
 class ResearchIntent(BaseModel):
@@ -811,7 +814,7 @@ def build_research_intent(
         urgency.append("deadline_or_hearing_possible")
     if _has_any(intake.narrative, ("changed the locks", "stuff outside", "homeless")):
         urgency.append("housing_displacement_possible")
-    if _has_any(intake.narrative, ("took my child", "removed my child", "protective custody", "took my baby")):
+    if _has_any(intake.narrative, ("took my child", "removed my child", "protective custody")):
         urgency.append("custody_removal_possible")
     if _has_any(intake.narrative, ("arrest", "jail", "probation")):
         urgency.append("criminal_liberty_possible")
@@ -823,6 +826,8 @@ def build_research_intent(
             cue_lower = cue.lower()
             if cue_lower not in urgency:
                 urgency.append(cue_lower)
+        if concept.subdomain == "EMERGENCY_REMOVAL" and "custody_removal_possible" not in urgency:
+            urgency.append("custody_removal_possible")
         for dq in concept.disambiguation_questions:
             if not any(c.question == dq for c in clarifications):
                 clarifications.append(
@@ -848,42 +853,28 @@ def build_research_intent(
     ]
     if jurisdiction.state.state == ResolutionState.KNOWN and jurisdiction.state.value:
         registry = source_registry or build_canonical_registry()
-        # State primary and explanatory sources
-        for reg_source in registry.filter_by_jurisdiction(jurisdiction.state.value):
-            is_explanatory = reg_source.authority_family == AuthorityFamily.FORMS_GUIDANCE
+        lower_narrative = intake.narrative.lower()
+        federal_applicable = (
+            jurisdiction.state.value in {"US", "US-FED"}
+            or any("federal" in i.domain or "civil_rights" in i.subdomain or "icwa" in i.issue_id for i in issues)
+            or _has_any(lower_narrative, ("constitution", "civil rights", "1983", "icwa", "title iv-e", "federal"))
+        )
+        for reg_source in registry.resolve_candidate_sources(
+            jurisdiction.state.value,
+            include_federal_overlay=federal_applicable,
+        ):
             sources.append(
                 GoverningSourceCandidate(
                     source_id=reg_source.source_id,
                     description=f"{reg_source.source_name} ({reg_source.provider_name})",
-                    source_kind="explanatory_process" if is_explanatory else "primary_authority",
+                    source_kind=reg_source.authority_family.value.lower(),
                     status=ResolutionState.INFERRED,
+                    official_status=reg_source.official_status.value,
+                    authority_level=reg_source.authority_level.value,
+                    currentness_capability=reg_source.currentness_capability.value,
                 )
             )
 
-        # Federal overlay included only when federal issues or claims are implicated
-        lower_narrative = intake.narrative.lower()
-        federal_applicable = (
-            jurisdiction.state.value == "US-FED"
-            or any("federal" in i.domain or "civil_rights" in i.subdomain or "icwa" in i.issue_id for i in issues)
-            or _has_any(lower_narrative, ("constitution", "civil rights", "1983", "icwa", "title iv-e", "federal"))
-        )
-        if federal_applicable:
-            circuit_code = "CA7" if jurisdiction.state.value == "US-WI" else ("CA8" if jurisdiction.state.value == "US-MN" else None)
-            fed_sources = [s for s in registry.sources if s.source_id.startswith("US-FED")]
-            for reg_source in fed_sources:
-                if "CA7" in reg_source.source_id and circuit_code != "CA7":
-                    continue
-                if "CA8" in reg_source.source_id and circuit_code != "CA8":
-                    continue
-                is_explanatory = reg_source.authority_family == AuthorityFamily.FORMS_GUIDANCE
-                sources.append(
-                    GoverningSourceCandidate(
-                        source_id=reg_source.source_id,
-                        description=f"{reg_source.source_name} ({reg_source.provider_name})",
-                        source_kind="explanatory_process" if is_explanatory else "primary_authority",
-                        status=ResolutionState.INFERRED,
-                    )
-                )
 
     summary = "; ".join(issue.label for issue in issues)
     return ResearchIntent(

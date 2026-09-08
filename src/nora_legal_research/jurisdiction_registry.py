@@ -249,3 +249,30 @@ class JurisdictionSourceRegistry(BaseModel):
             if s.source_id == source_id:
                 return s
         return None
+
+    def resolve_candidate_sources(
+        self,
+        jurisdiction: str,
+        *,
+        include_federal_overlay: bool = False,
+    ) -> tuple[SourceDefinition, ...]:
+        """Resolve candidate sources for a jurisdiction, optionally including relevant federal overlay.
+
+        Operates strictly on structured metadata (jurisdiction, geographic_scope) without string-parsing source IDs.
+        """
+        results: list[SourceDefinition] = list(self.filter_by_jurisdiction(jurisdiction))
+        if include_federal_overlay or jurisdiction in {"US", "US-FED"}:
+            state_circuit_map = {
+                "US-WI": GeographicScope.CIRCUIT_7,
+                "US-MN": GeographicScope.CIRCUIT_8,
+            }
+            target_circuit = state_circuit_map.get(jurisdiction)
+            for source in self.sources:
+                if source.geographic_scope == GeographicScope.NATIONAL or source.jurisdiction == "US":
+                    if source not in results:
+                        results.append(source)
+                elif target_circuit is not None and source.geographic_scope == target_circuit:
+                    if source not in results:
+                        results.append(source)
+        return tuple(results)
+
