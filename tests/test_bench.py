@@ -7,7 +7,7 @@ import pytest
 from nora_legal_research.bench.corpus import CANONICAL_BENCHMARK_SCENARIOS, get_canonical_scenarios
 from nora_legal_research.bench.evaluator import DeterministicBenchEvaluator
 from nora_legal_research.bench.metrics import MetricName
-from nora_legal_research.bench.models import BenchmarkScenario
+from nora_legal_research.bench.models import BenchmarkCorpusRole, BenchmarkScenario
 
 
 ROOT = Path(__file__).parents[1]
@@ -23,6 +23,7 @@ def test_canonical_benchmark_corpus_completeness():
 
     for s in scenarios:
         assert s.scenario_id.startswith("BENCH-")
+        assert s.corpus_role == BenchmarkCorpusRole.DEVELOPMENT, "Inspected development scenarios cannot be marked HOLDOUT"
         assert len(s.gold_issue_families) > 0, f"Scenario {s.scenario_id} lacks gold issues"
         assert len(s.known_traps) > 0, f"Scenario {s.scenario_id} lacks known traps"
         assert len(s.unsupported_conclusions_prohibited) > 0, f"Scenario {s.scenario_id} lacks prohibited conclusions"

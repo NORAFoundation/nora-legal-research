@@ -27,9 +27,10 @@ The minimum reference vertical slice is complete and verified:
    - Invariant: Maps lay complaints to research hypotheses (`USER_NOMINATED_*`), not pre-judged legal conclusions.
    - Flags false-friend terminology, urgency cues, and disambiguation requirements.
 
-3. **NORA Bench V1 Framework & Adversarial Corpus (`src/nora_legal_research/bench/`)**:
-   - Deterministic, offline benchmark scenario and metric contracts.
-   - 25 synthetic adversarial scenarios testing wrong terminology, hidden deadlines, omitted jurisdictions, prompt injections, contradictory evidence, and multi-matter overlap.
+3. **NORA Bench V1 Framework & Evaluation Doctrine (`src/nora_legal_research/bench/`)**:
+   - Deterministic, offline benchmark scenario and metric contracts with explicit `BenchmarkCorpusRole` (`DEVELOPMENT`, `VALIDATION`, `HOLDOUT`).
+   - 25 synthetic adversarial scenarios designated as `DEVELOPMENT / ADVERSARIAL DESIGN SET`.
+   - Evaluation doctrine: `BUILD WITH dev fixtures` -> `TUNE WITH dev evidence` -> `VALIDATE WITH separately curated cases` -> `RELEASE-GATE WITH untouched holdout`. Zero benchmark leakage permitted.
    - Deterministic rule-based evaluator (`DeterministicBenchEvaluator`) validating metrics without requiring live LLM calls.
 
 4. **Canonical Research Contracts & State Machines (`src/nora_legal_research/canonical_research.py`)**:
@@ -43,14 +44,21 @@ The minimum reference vertical slice is complete and verified:
    - `ResearchPackage`: Portable, auditable research artifact.
    - `MatterScope`: Enforces strict separation between public law data and private user matters.
 
+5. **Narrative Compiler Integration (`src/nora_legal_research/narrative_compiler.py`)**:
+   - Multi-channel issue discovery: General lay mappings + People-to-Law candidate hypotheses + user interpretations + procedural issues.
+   - Epistemic discipline: Lexical/alias hits produce candidate hypotheses (`ISSUE_HYPOTHESIS`, confidence 0.5) without inflated confidence.
+   - Retaliation allegations strictly preserved as `USER_NOMINATED_RETALIATION_THEORY`.
+   - Bounded `JurisdictionSourceRegistry` candidate retrieval: Separates primary controlling authority from explanatory/forms guidance; conditions federal overlay on federal claims/questions and bounds appellate sources to the governing circuit (7th Cir for WI, 8th Cir for MN).
+
 ## Contract Targets — Not Yet Implemented
 
 - Centralized live external citator connector (Shepard's/KeyCite equivalent)
 - Full automated bulk statute XML ingestion pipeline
 - Production-scale Westlaw/Lexis/PACER parser adapters
+- Separate, untouched release-gating holdout benchmark corpus
 
 ## Verified
 
-- `make test` / `pytest`: **94 passed in 0.44s**.
-- `make validate`: Scaffold passed, all 30 JSON schemas generated and validated (`scripts/generate_schemas.py --check`), Python bytecode compiled cleanly.
-- End-to-end citation parsing, quote verification, CourtListener normalization, treatment trace, jurisdiction validation, benchmark evaluation, and state machine transitions verified.
+- `make test` / `pytest`: **101 passed in 0.72s**.
+- `make validate`: Scaffold passed, all 30 JSON schemas generated and synchronized (`scripts/generate_schemas.py --check`), Python bytecode compiled cleanly.
+- End-to-end citation parsing, quote verification, CourtListener normalization, treatment trace, jurisdiction validation, benchmark evaluation, P2L negative controls, and compiler state machine transitions verified.

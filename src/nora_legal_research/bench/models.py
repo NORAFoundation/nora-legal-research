@@ -19,6 +19,12 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 BENCHMARK_SCENARIO_CONTRACT = "nora.legal-research/BenchmarkScenario/1.0"
 
 
+class BenchmarkCorpusRole(str, Enum):
+    DEVELOPMENT = "DEVELOPMENT"
+    VALIDATION = "VALIDATION"
+    HOLDOUT = "HOLDOUT"
+
+
 class UserSophistication(str, Enum):
     LAY_UNREPRESENTED = "LAY_UNREPRESENTED"
     LAY_SEEKING_COUNSEL = "LAY_SEEKING_COUNSEL"
@@ -82,6 +88,7 @@ class BenchmarkScenario(BaseModel):
     is_security_adversarial: bool = False
     adversarial_injection_prompt: Optional[str] = None
     matter_id: str = "DEFAULT-MATTER"
+    corpus_role: BenchmarkCorpusRole = BenchmarkCorpusRole.DEVELOPMENT
 
     @field_validator("contract")
     @classmethod

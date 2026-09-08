@@ -1,5 +1,14 @@
 {
   "$defs": {
+    "BenchmarkCorpusRole": {
+      "enum": [
+        "DEVELOPMENT",
+        "VALIDATION",
+        "HOLDOUT"
+      ],
+      "title": "BenchmarkCorpusRole",
+      "type": "string"
+    },
     "BenchmarkDocument": {
       "additionalProperties": false,
       "description": "Synthetic document associated with a scenario (e.g., notice, petition, text screenshot).",
@@ -124,6 +133,10 @@
       "default": "nora.legal-research/BenchmarkScenario/1.0",
       "title": "Contract",
       "type": "string"
+    },
+    "corpus_role": {
+      "$ref": "#/$defs/BenchmarkCorpusRole",
+      "default": "DEVELOPMENT"
     },
     "documents": {
       "default": [],

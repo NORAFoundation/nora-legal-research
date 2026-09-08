@@ -71,3 +71,25 @@ def test_all_concepts_have_false_friends_and_disambiguation():
         assert len(c.disambiguation_questions) > 0, f"Concept {c.concept_id} lacks disambiguation questions"
         assert len(c.candidate_legal_issues) > 0, f"Concept {c.concept_id} lacks candidate legal issues"
         assert len(c.governing_source_families) > 0, f"Concept {c.concept_id} lacks governing sources"
+
+
+def test_ontology_negative_controls_prevent_spurious_matches():
+    """Verify that generic legal or ordinary language does NOT trigger child-welfare lived-problem concepts."""
+    ontology = build_canonical_ontology()
+
+    negative_cases = (
+        # Unrelated use of 'warrant'
+        "The police had a search warrant for stolen electronics in an apartment across the street.",
+        # Ordinary family visits without suspension or court dispute
+        "We had nice weekly visits with my grandmother during summer vacation.",
+        # Generic doctrinal lecture mentioning hearsay
+        "The law professor gave a lecture on hearsay exceptions under Federal Rule of Evidence 803.",
+        # Statutory standard excerpt mentioning reasonable efforts without parent-lived problem
+        "The statute requires the department to make reasonable efforts to prevent placement.",
+        # Commercial landlord dispute
+        "My commercial landlord locked our office doors after a rent dispute in corporate headquarters.",
+    )
+
+    for text in negative_cases:
+        matched = ontology.match_narrative(text)
+        assert len(matched) == 0, f"Spurious match detected on negative control '{text}': {[c.concept_id for c in matched]}"

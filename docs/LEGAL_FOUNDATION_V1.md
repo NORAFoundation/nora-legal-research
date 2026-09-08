@@ -47,12 +47,19 @@ The V1 ontology contains 25 canonical concept families covering emergency remova
 
 ---
 
-## 4. NORA Bench V1 Framework
+## 4. NORA Bench V1 Framework & Evaluation Doctrine
 
 NORA Bench (`src/nora_legal_research/bench/`) provides an auditable, offline benchmark suite:
 - **Scenario Schema** (`BenchmarkScenario`): Represents synthetic narratives, optional evidentiary documents, latent issues, procedural postures, urgency facts, gold issue families, governing sources, known traps, and prohibited conclusions.
-- **Corpus V1**: 25 diverse synthetic scenarios spanning wrong legal terminology, hidden deadlines, omitted jurisdictions, removal, visitation restrictions, reasonable efforts, permanency, kinship placement, TPR, evidentiary foundation, retaliation, family integrity, § 1983 barriers, immunities, Younger abstention, persuasive vs binding authority, outdated case law, citation mismatches, unauthenticated evidence, contradictory evidence, prompt injection attacks, and multi-matter overlap.
+- **Corpus Role Classification**: Scenarios explicitly declare their role via `BenchmarkCorpusRole` (`DEVELOPMENT`, `VALIDATION`, `HOLDOUT`).
+- **Development Corpus V1**: 25 diverse synthetic scenarios spanning wrong legal terminology, hidden deadlines, omitted jurisdictions, removal, visitation restrictions, reasonable efforts, permanency, kinship placement, TPR, evidentiary foundation, retaliation, family integrity, § 1983 barriers, immunities, Younger abstention, persuasive vs binding authority, outdated case law, citation mismatches, unauthenticated evidence, contradictory evidence, prompt injection attacks, and multi-matter overlap.
+  > [!IMPORTANT]
+  > **Methodological Disclosure**: All 25 visible scenarios in `canonical_bench_v1.json` are designated as `DEVELOPMENT / ADVERSARIAL DESIGN SET`. Because their narratives and gold fields are inspected during architectural design, they are not claimed as an untouched, unbiased holdout evaluation set. Release gating must use a separately curated, untouched holdout corpus.
 - **Evaluator Interface** (`DeterministicBenchEvaluator`): Executes deterministic, rule-based checks verifying latent issue recall, trap detection, adverse authority retrieval, unsupported claim exclusion, prompt injection resistance, and cross-matter isolation without requiring a live LLM API.
+- **Evaluation Doctrine**:
+  $$\text{BUILD WITH dev fixtures} \longrightarrow \text{TUNE WITH dev evidence} \longrightarrow \text{VALIDATE WITH separately curated cases} \longrightarrow \text{RELEASE-GATE WITH untouched holdout}$$
+  - **No Benchmark-Induced Alias Leakage**: Production ontologies and compilers must never be tuned to fit specific benchmark narratives.
+  - **Separate Testing**: Unit testing of ontologies (including positive matches and negative controls against spurious triggers) is strictly separated from end-to-end system benchmarking.
 
 ---
 
