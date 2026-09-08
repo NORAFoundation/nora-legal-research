@@ -75,6 +75,10 @@ class BenchmarkScenario(BaseModel):
     expected_clarification_questions: tuple[str, ...] = ()
     expected_epistemic_labels: tuple[str, ...] = ()
     expected_coverage: ExpectedCoverageRequirements = Field(default_factory=ExpectedCoverageRequirements)
+    substantive_gold_authority_pending: bool = True
+    authority_verification_notes: tuple[str, ...] = (
+        "Governing statutory and procedural rule framework verified against official primary sources; substantive case law holding qualification remains pending qualified citator integration.",
+    )
     is_security_adversarial: bool = False
     adversarial_injection_prompt: Optional[str] = None
     matter_id: str = "DEFAULT-MATTER"

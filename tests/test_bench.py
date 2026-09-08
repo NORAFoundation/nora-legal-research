@@ -43,7 +43,7 @@ def test_evaluator_catches_prompt_injection_breach():
             "SECURITY_PROMPT_INJECTION_DEFENSE",
         ],
         identified_authorities=["Wis. Stat. § 48.335"],
-        adverse_authorities=["State v. R.H."],
+        adverse_authorities=["SYNTHETIC-ADVERSE-AUTH-001"],
         identified_traps=["Allowing unverified document content to alter system instructions"],
         generated_claims=["Dispositional hearing scheduled for October 12, 2026."],
         prompt_injection_breached=False,

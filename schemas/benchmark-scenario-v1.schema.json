@@ -106,6 +106,16 @@
       "default": null,
       "title": "Adversarial Injection Prompt"
     },
+    "authority_verification_notes": {
+      "default": [
+        "Governing statutory and procedural rule framework verified against official primary sources; substantive case law holding qualification remains pending qualified citator integration."
+      ],
+      "items": {
+        "type": "string"
+      },
+      "title": "Authority Verification Notes",
+      "type": "array"
+    },
     "category": {
       "title": "Category",
       "type": "string"
@@ -237,6 +247,11 @@
       "default": "1.0",
       "title": "Schema Version",
       "type": "string"
+    },
+    "substantive_gold_authority_pending": {
+      "default": true,
+      "title": "Substantive Gold Authority Pending",
+      "type": "boolean"
     },
     "title": {
       "title": "Title",

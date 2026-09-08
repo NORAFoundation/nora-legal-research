@@ -212,7 +212,7 @@ def test_research_package_creation():
         jurisdiction_and_posture="US-WI Circuit Court CHIPS temporary custody",
         verified_propositions=(prop,),
         relied_upon_authorities=("Wis. Stat. § 48.19",),
-        adverse_authorities=("State v. P.G., 200 Wis. 2d 100",),
+        adverse_authorities=("SYNTHETIC-ADVERSE-AUTH-001",),
         currentness_receipt=receipt,
         wargame_result=wargame,
         coverage=coverage,
