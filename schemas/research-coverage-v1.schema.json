@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Dimensional research coverage metrics across 11 distinct dimensions. Never a win probability.",
+  "properties": {
+    "adverse_research": {
+      "title": "Adverse Research",
+      "type": "number"
+    },
+    "controlling_authority": {
+      "title": "Controlling Authority",
+      "type": "number"
+    },
+    "currentness": {
+      "title": "Currentness",
+      "type": "number"
+    },
+    "evidence_application": {
+      "title": "Evidence Application",
+      "type": "number"
+    },
+    "fact_analogies": {
+      "title": "Fact Analogies",
+      "type": "number"
+    },
+    "governing_text": {
+      "title": "Governing Text",
+      "type": "number"
+    },
+    "jurisdiction": {
+      "title": "Jurisdiction",
+      "type": "number"
+    },
+    "local_rules": {
+      "title": "Local Rules",
+      "type": "number"
+    },
+    "procedure": {
+      "title": "Procedure",
+      "type": "number"
+    },
+    "quote_verification": {
+      "title": "Quote Verification",
+      "type": "number"
+    },
+    "treatment": {
+      "title": "Treatment",
+      "type": "number"
+    }
+  },
+  "required": [
+    "jurisdiction",
+    "governing_text",
+    "controlling_authority",
+    "fact_analogies",
+    "procedure",
+    "adverse_research",
+    "local_rules",
+    "currentness",
+    "treatment",
+    "quote_verification",
+    "evidence_application"
+  ],
+  "title": "ResearchCoverage",
+  "type": "object"
+}

@@ -1,0 +1,96 @@
+{
+  "$defs": {
+    "AuthorityFirewallClassification": {
+      "description": "Authority and evidence tiers for machine-enforceable security and provenance.",
+      "enum": [
+        "PRIMARY_AUTHORITY",
+        "PERSUASIVE_AUTHORITY",
+        "EXPLANATORY",
+        "USER_EVIDENCE",
+        "UNVERIFIED_EXTERNAL"
+      ],
+      "title": "AuthorityFirewallClassification",
+      "type": "string"
+    },
+    "AuthorityQualificationState": {
+      "description": "Graduated lifecycle states for legal authority.",
+      "enum": [
+        "DISCOVERED",
+        "CANDIDATE",
+        "IDENTITY_VERIFIED",
+        "JURISDICTION_QUALIFIED",
+        "HIERARCHY_QUALIFIED",
+        "PASSAGE_VERIFIED",
+        "CURRENTNESS_CHECKED",
+        "TREATMENT_ASSESSED",
+        "RELIED_UPON"
+      ],
+      "title": "AuthorityQualificationState",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Enforces strict graduation of retrieved legal citations before reliance.",
+  "properties": {
+    "authority_id": {
+      "title": "Authority Id",
+      "type": "string"
+    },
+    "citation_text": {
+      "title": "Citation Text",
+      "type": "string"
+    },
+    "classification": {
+      "$ref": "#/$defs/AuthorityFirewallClassification"
+    },
+    "currentness_checked": {
+      "default": false,
+      "title": "Currentness Checked",
+      "type": "boolean"
+    },
+    "negative_treatment": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Negative Treatment"
+    },
+    "pinpoint_passage": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pinpoint Passage"
+    },
+    "state": {
+      "$ref": "#/$defs/AuthorityQualificationState",
+      "default": "DISCOVERED"
+    },
+    "verification_notes": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Verification Notes",
+      "type": "array"
+    }
+  },
+  "required": [
+    "authority_id",
+    "citation_text",
+    "classification"
+  ],
+  "title": "AuthorityQualificationLifecycle",
+  "type": "object"
+}

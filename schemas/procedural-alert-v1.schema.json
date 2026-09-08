@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Detected procedural deadlines and urgency alerts.",
+  "properties": {
+    "alert_id": {
+      "title": "Alert Id",
+      "type": "string"
+    },
+    "confidence": {
+      "title": "Confidence",
+      "type": "number"
+    },
+    "consequence": {
+      "title": "Consequence",
+      "type": "string"
+    },
+    "date_or_deadline": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Date Or Deadline"
+    },
+    "event": {
+      "title": "Event",
+      "type": "string"
+    },
+    "jurisdiction": {
+      "title": "Jurisdiction",
+      "type": "string"
+    },
+    "notes": {
+      "default": "Possible deadline detected; not yet legally verified.",
+      "title": "Notes",
+      "type": "string"
+    },
+    "source_evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Evidence Ids",
+      "type": "array"
+    },
+    "urgency": {
+      "default": "HIGH",
+      "title": "Urgency",
+      "type": "string"
+    },
+    "verification_state": {
+      "default": "DETECTED_UNVERIFIED",
+      "title": "Verification State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "alert_id",
+    "event",
+    "jurisdiction",
+    "confidence",
+    "consequence"
+  ],
+  "title": "ProceduralAlert",
+  "type": "object"
+}

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A specific proposition of law tied to verified supporting passages and adverse authority.",
+  "properties": {
+    "adverse_authorities": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Adverse Authorities",
+      "type": "array"
+    },
+    "currentness_status": {
+      "default": "VERIFIED_CURRENT",
+      "title": "Currentness Status",
+      "type": "string"
+    },
+    "exact_proposition": {
+      "title": "Exact Proposition",
+      "type": "string"
+    },
+    "limitations": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "proposition_id": {
+      "title": "Proposition Id",
+      "type": "string"
+    },
+    "supporting_authorities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Supporting Authorities",
+      "type": "array"
+    },
+    "supporting_passages": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Supporting Passages",
+      "type": "array"
+    },
+    "verification_state": {
+      "default": "PASSAGE_VERIFIED",
+      "title": "Verification State",
+      "type": "string"
+    }
+  },
+  "required": [
+    "proposition_id",
+    "exact_proposition",
+    "supporting_authorities",
+    "supporting_passages"
+  ],
+  "title": "LegalProposition",
+  "type": "object"
+}

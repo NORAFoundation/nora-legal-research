@@ -1,0 +1,587 @@
+{
+  "$defs": {
+    "CurrentnessReceipt": {
+      "additionalProperties": false,
+      "description": "Audit receipt recording date and sources checked for temporal currency.",
+      "properties": {
+        "checked_through_date": {
+          "title": "Checked Through Date",
+          "type": "string"
+        },
+        "later_authorities": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Later Authorities",
+          "type": "array"
+        },
+        "receipt_id": {
+          "title": "Receipt Id",
+          "type": "string"
+        },
+        "sources_checked": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Sources Checked",
+          "type": "array"
+        },
+        "statutory_or_rule_changes": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Statutory Or Rule Changes",
+          "type": "array"
+        },
+        "treatment_candidates": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Treatment Candidates",
+          "type": "array"
+        },
+        "unresolved_uncertainty": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Uncertainty",
+          "type": "array"
+        }
+      },
+      "required": [
+        "receipt_id",
+        "checked_through_date",
+        "sources_checked"
+      ],
+      "title": "CurrentnessReceipt",
+      "type": "object"
+    },
+    "LegalProposition": {
+      "additionalProperties": false,
+      "description": "A specific proposition of law tied to verified supporting passages and adverse authority.",
+      "properties": {
+        "adverse_authorities": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Adverse Authorities",
+          "type": "array"
+        },
+        "currentness_status": {
+          "default": "VERIFIED_CURRENT",
+          "title": "Currentness Status",
+          "type": "string"
+        },
+        "exact_proposition": {
+          "title": "Exact Proposition",
+          "type": "string"
+        },
+        "limitations": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "proposition_id": {
+          "title": "Proposition Id",
+          "type": "string"
+        },
+        "supporting_authorities": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supporting Authorities",
+          "type": "array"
+        },
+        "supporting_passages": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supporting Passages",
+          "type": "array"
+        },
+        "verification_state": {
+          "default": "PASSAGE_VERIFIED",
+          "title": "Verification State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "proposition_id",
+        "exact_proposition",
+        "supporting_authorities",
+        "supporting_passages"
+      ],
+      "title": "LegalProposition",
+      "type": "object"
+    },
+    "LegalTheory": {
+      "additionalProperties": false,
+      "description": "A legal theory tracking user proposals through adversarial verification.",
+      "properties": {
+        "adverse_testing_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Adverse Testing Ids",
+          "type": "array"
+        },
+        "issue_id": {
+          "title": "Issue Id",
+          "type": "string"
+        },
+        "rationale": {
+          "default": "",
+          "title": "Rationale",
+          "type": "string"
+        },
+        "source_concept_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Concept Id"
+        },
+        "state": {
+          "$ref": "#/$defs/LegalTheoryState",
+          "default": "USER_PROPOSED"
+        },
+        "statement": {
+          "title": "Statement",
+          "type": "string"
+        },
+        "supporting_evidence_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Supporting Evidence Ids",
+          "type": "array"
+        },
+        "theory_id": {
+          "title": "Theory Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "theory_id",
+        "statement",
+        "issue_id"
+      ],
+      "title": "LegalTheory",
+      "type": "object"
+    },
+    "LegalTheoryState": {
+      "description": "Graduated lifecycle states for legal theories.",
+      "enum": [
+        "USER_PROPOSED",
+        "DISCOVERED",
+        "HYPOTHESIS",
+        "RESEARCH_SUPPORTED",
+        "ADVERSELY_TESTED",
+        "STRONG",
+        "RELIED_UPON",
+        "REJECTED"
+      ],
+      "title": "LegalTheoryState",
+      "type": "string"
+    },
+    "MatterScope": {
+      "additionalProperties": false,
+      "description": "Privacy and matter isolation scope separating private user matter from public law.",
+      "properties": {
+        "is_public_law_data": {
+          "default": false,
+          "title": "Is Public Law Data",
+          "type": "boolean"
+        },
+        "matter_scope_id": {
+          "title": "Matter Scope Id",
+          "type": "string"
+        },
+        "source_scope_id": {
+          "title": "Source Scope Id",
+          "type": "string"
+        },
+        "user_scope_id": {
+          "title": "User Scope Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_scope_id",
+        "matter_scope_id",
+        "source_scope_id"
+      ],
+      "title": "MatterScope",
+      "type": "object"
+    },
+    "ProceduralAlert": {
+      "additionalProperties": false,
+      "description": "Detected procedural deadlines and urgency alerts.",
+      "properties": {
+        "alert_id": {
+          "title": "Alert Id",
+          "type": "string"
+        },
+        "confidence": {
+          "title": "Confidence",
+          "type": "number"
+        },
+        "consequence": {
+          "title": "Consequence",
+          "type": "string"
+        },
+        "date_or_deadline": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Date Or Deadline"
+        },
+        "event": {
+          "title": "Event",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "title": "Jurisdiction",
+          "type": "string"
+        },
+        "notes": {
+          "default": "Possible deadline detected; not yet legally verified.",
+          "title": "Notes",
+          "type": "string"
+        },
+        "source_evidence_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Evidence Ids",
+          "type": "array"
+        },
+        "urgency": {
+          "default": "HIGH",
+          "title": "Urgency",
+          "type": "string"
+        },
+        "verification_state": {
+          "default": "DETECTED_UNVERIFIED",
+          "title": "Verification State",
+          "type": "string"
+        }
+      },
+      "required": [
+        "alert_id",
+        "event",
+        "jurisdiction",
+        "confidence",
+        "consequence"
+      ],
+      "title": "ProceduralAlert",
+      "type": "object"
+    },
+    "ResearchCoverage": {
+      "additionalProperties": false,
+      "description": "Dimensional research coverage metrics across 11 distinct dimensions. Never a win probability.",
+      "properties": {
+        "adverse_research": {
+          "title": "Adverse Research",
+          "type": "number"
+        },
+        "controlling_authority": {
+          "title": "Controlling Authority",
+          "type": "number"
+        },
+        "currentness": {
+          "title": "Currentness",
+          "type": "number"
+        },
+        "evidence_application": {
+          "title": "Evidence Application",
+          "type": "number"
+        },
+        "fact_analogies": {
+          "title": "Fact Analogies",
+          "type": "number"
+        },
+        "governing_text": {
+          "title": "Governing Text",
+          "type": "number"
+        },
+        "jurisdiction": {
+          "title": "Jurisdiction",
+          "type": "number"
+        },
+        "local_rules": {
+          "title": "Local Rules",
+          "type": "number"
+        },
+        "procedure": {
+          "title": "Procedure",
+          "type": "number"
+        },
+        "quote_verification": {
+          "title": "Quote Verification",
+          "type": "number"
+        },
+        "treatment": {
+          "title": "Treatment",
+          "type": "number"
+        }
+      },
+      "required": [
+        "jurisdiction",
+        "governing_text",
+        "controlling_authority",
+        "fact_analogies",
+        "procedure",
+        "adverse_research",
+        "local_rules",
+        "currentness",
+        "treatment",
+        "quote_verification",
+        "evidence_application"
+      ],
+      "title": "ResearchCoverage",
+      "type": "object"
+    },
+    "WarGameResult": {
+      "additionalProperties": false,
+      "description": "Multi-perspective stress-test results across advocate and opposing viewpoints.",
+      "properties": {
+        "advocate_arguments": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Advocate Arguments",
+          "type": "array"
+        },
+        "conflicts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Conflicts",
+          "type": "array"
+        },
+        "evidence_needed": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Needed",
+          "type": "array"
+        },
+        "failed": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Failed",
+          "type": "array"
+        },
+        "opposition_arguments": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Opposition Arguments",
+          "type": "array"
+        },
+        "rebuttals": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Rebuttals",
+          "type": "array"
+        },
+        "research_needed": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Research Needed",
+          "type": "array"
+        },
+        "survived_conditionally": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Survived Conditionally",
+          "type": "array"
+        },
+        "survived_strongly": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Survived Strongly",
+          "type": "array"
+        },
+        "target_objective": {
+          "title": "Target Objective",
+          "type": "string"
+        },
+        "unresolved": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved",
+          "type": "array"
+        },
+        "wargame_id": {
+          "title": "Wargame Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "wargame_id",
+        "target_objective",
+        "advocate_arguments",
+        "opposition_arguments",
+        "conflicts",
+        "rebuttals"
+      ],
+      "title": "WarGameResult",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Portable, durable, inspectable research artifact combining all research findings.",
+  "properties": {
+    "adverse_authorities": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Adverse Authorities",
+      "type": "array"
+    },
+    "contract": {
+      "default": "nora.legal-research/CanonicalResearch/1.0",
+      "title": "Contract",
+      "type": "string"
+    },
+    "coverage": {
+      "$ref": "#/$defs/ResearchCoverage"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "currentness_receipt": {
+      "$ref": "#/$defs/CurrentnessReceipt"
+    },
+    "governing_law": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Governing Law",
+      "type": "array"
+    },
+    "issue_map": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Issue Map",
+      "type": "array"
+    },
+    "jurisdiction_and_posture": {
+      "title": "Jurisdiction And Posture",
+      "type": "string"
+    },
+    "matter_scope": {
+      "$ref": "#/$defs/MatterScope"
+    },
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "procedural_alerts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/ProceduralAlert"
+      },
+      "title": "Procedural Alerts",
+      "type": "array"
+    },
+    "provenance": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Provenance",
+      "type": "array"
+    },
+    "question_or_objective": {
+      "title": "Question Or Objective",
+      "type": "string"
+    },
+    "relied_upon_authorities": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Relied Upon Authorities",
+      "type": "array"
+    },
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "theories": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/LegalTheory"
+      },
+      "title": "Theories",
+      "type": "array"
+    },
+    "verified_propositions": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/LegalProposition"
+      },
+      "title": "Verified Propositions",
+      "type": "array"
+    },
+    "wargame_result": {
+      "$ref": "#/$defs/WarGameResult"
+    }
+  },
+  "required": [
+    "package_id",
+    "matter_scope",
+    "question_or_objective",
+    "jurisdiction_and_posture",
+    "currentness_receipt",
+    "wargame_result",
+    "coverage"
+  ],
+  "title": "ResearchPackage",
+  "type": "object"
+}
