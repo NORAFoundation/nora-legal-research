@@ -17,7 +17,7 @@ The minimum reference vertical slice is complete and verified:
 ## Implemented Foundations (V1 Foundation Pass)
 
 1. **JurisdictionSourceRegistry (`src/nora_legal_research/jurisdiction_registry.py`, `jurisdiction_data.py`)**:
-   - Comprehensive source catalog covering Wisconsin (8 sources), Minnesota (9 sources), and Federal Overlay (10 sources).
+   - Comprehensive source catalog covering Wisconsin (9 sources), Minnesota (10 sources), and Federal Overlay (10 sources).
    - Strict separation of primary controlling authority vs explanatory/process materials.
    - CourtListener mirror explicitly modeled as an unofficial historical snapshot, distinct from live official judicial slip releases.
    - Earned coverage semantics: prevents uncertified `DEEP_COVERAGE` claims.
@@ -59,6 +59,6 @@ The minimum reference vertical slice is complete and verified:
 
 ## Verified
 
-- `make test` / `pytest`: **101 passed in 0.72s**.
+- `make test` / `pytest`: **102 passed in 0.62s**.
 - `make validate`: Scaffold passed, all 30 JSON schemas generated and synchronized (`scripts/generate_schemas.py --check`), Python bytecode compiled cleanly.
 - End-to-end citation parsing, quote verification, CourtListener normalization, treatment trace, jurisdiction validation, benchmark evaluation, P2L negative controls, and compiler state machine transitions verified.

@@ -275,4 +275,3 @@ class JurisdictionSourceRegistry(BaseModel):
                     if source not in results:
                         results.append(source)
         return tuple(results)
-
