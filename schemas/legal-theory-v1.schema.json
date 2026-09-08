@@ -1,0 +1,80 @@
+{
+  "$defs": {
+    "LegalTheoryState": {
+      "description": "Graduated lifecycle states for legal theories.",
+      "enum": [
+        "USER_PROPOSED",
+        "DISCOVERED",
+        "HYPOTHESIS",
+        "RESEARCH_SUPPORTED",
+        "ADVERSELY_TESTED",
+        "STRONG",
+        "RELIED_UPON",
+        "REJECTED"
+      ],
+      "title": "LegalTheoryState",
+      "type": "string"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "A legal theory tracking user proposals through adversarial verification.",
+  "properties": {
+    "adverse_testing_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Adverse Testing Ids",
+      "type": "array"
+    },
+    "issue_id": {
+      "title": "Issue Id",
+      "type": "string"
+    },
+    "rationale": {
+      "default": "",
+      "title": "Rationale",
+      "type": "string"
+    },
+    "source_concept_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Concept Id"
+    },
+    "state": {
+      "$ref": "#/$defs/LegalTheoryState",
+      "default": "USER_PROPOSED"
+    },
+    "statement": {
+      "title": "Statement",
+      "type": "string"
+    },
+    "supporting_evidence_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Supporting Evidence Ids",
+      "type": "array"
+    },
+    "theory_id": {
+      "title": "Theory Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "theory_id",
+    "statement",
+    "issue_id"
+  ],
+  "title": "LegalTheory",
+  "type": "object"
+}

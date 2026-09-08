@@ -16,6 +16,14 @@ from typing import Iterable, Optional
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 from .provider_contract import AuthorityResearchRequest, PROVIDER_CONTRACT_VERSION
+from .people_to_law import (
+    PEOPLE_TO_LAW_CONTRACT,
+    PeopleToLawConcept,
+    PeopleToLawOntology,
+    build_canonical_ontology,
+)
+from .jurisdiction_data import build_canonical_registry
+from .jurisdiction_registry import AuthorityFamily, JurisdictionSourceRegistry
 
 
 NARRATIVE_INTAKE_CONTRACT = "nora.legal-research/NarrativeResearchIntake/1.0"
@@ -286,6 +294,9 @@ class GoverningSourceCandidate(BaseModel):
     source_kind: str
     issue_id: Optional[str] = None
     status: ResolutionState = ResolutionState.INFERRED
+    official_status: Optional[str] = None
+    authority_level: Optional[str] = None
+    currentness_capability: Optional[str] = None
 
 
 class ResearchIntent(BaseModel):
@@ -710,7 +721,11 @@ def _resolve_jurisdiction(intake: NarrativeResearchIntake) -> JurisdictionResolu
     return JurisdictionResolution(country=country, state=state, county=county, court_system=court, matter_type=matter, trial_appellate_posture=posture, relevant_event_date=relevant_date)
 
 
-def _issue_hypotheses(intake: NarrativeResearchIntake) -> tuple[IssueHypothesis, ...]:
+def _issue_hypotheses(
+    intake: NarrativeResearchIntake,
+    *,
+    p2l_ontology: Optional[PeopleToLawOntology] = None,
+) -> tuple[IssueHypothesis, ...]:
     lower = intake.narrative.lower()
     facts = intake.user_asserted_facts
     results: list[IssueHypothesis] = []
@@ -733,6 +748,37 @@ def _issue_hypotheses(intake: NarrativeResearchIntake) -> tuple[IssueHypothesis,
             context_needed=("controlling jurisdiction", "procedural posture", "primary documents") if mapping.jurisdiction_applicability == ("GENERAL",) else ("jurisdiction-specific terminology",),
             legal_terms=mapping.legal_terms,
         ))
+
+    # People-to-Law Child Welfare ontology scanning
+    ontology = p2l_ontology or build_canonical_ontology()
+    for concept in ontology.match_narrative(intake.narrative):
+        issue_id = concept.concept_id.lower().replace("-", "_")
+        if any(r.concept_id == concept.concept_id or r.issue_id == issue_id for r in results):
+            continue
+        triggers = tuple(fact.fact_id for fact in facts if _has_any(fact.text, concept.ordinary_language_aliases))
+        context_items = ["controlling jurisdiction", "procedural posture"]
+        if concept.disambiguation_questions:
+            context_items.extend(concept.disambiguation_questions[:2])
+        results.append(
+            IssueHypothesis(
+                issue_id=issue_id,
+                concept_id=concept.concept_id,
+                label=concept.preferred_label,
+                domain=concept.domain.lower(),
+                subdomain=concept.subdomain.lower(),
+                procedure_or_substance=concept.procedure_or_substance.lower(),
+                issue=issue_id,
+                subissue=concept.subdomain.lower(),
+                confidence=0.5,
+                why_inferred=f"Candidate issue inferred from People-to-Law Child Welfare ontology matching '{concept.preferred_label}'.",
+                trigger_fact_ids=triggers,
+                context_needed=tuple(context_items),
+                legal_terms=concept.candidate_legal_issues + tuple(concept.governing_source_families),
+                ontology_source=PEOPLE_TO_LAW_CONTRACT,
+                ontology_version=concept.version,
+            )
+        )
+
     if not results:
         results.append(IssueHypothesis(
             issue_id="unresolved_legal_issue", concept_id="unresolved.legal_issue",
@@ -746,9 +792,14 @@ def _issue_hypotheses(intake: NarrativeResearchIntake) -> tuple[IssueHypothesis,
     return tuple(results)
 
 
-def build_research_intent(intake: NarrativeResearchIntake) -> ResearchIntent:
+def build_research_intent(
+    intake: NarrativeResearchIntake,
+    *,
+    p2l_ontology: Optional[PeopleToLawOntology] = None,
+    source_registry: Optional[JurisdictionSourceRegistry] = None,
+) -> ResearchIntent:
     jurisdiction = _resolve_jurisdiction(intake)
-    issues = _issue_hypotheses(intake)
+    issues = _issue_hypotheses(intake, p2l_ontology=p2l_ontology)
     known = tuple(fact for fact in intake.user_asserted_facts if fact.category == EvidenceCategory.USER_ASSERTED_FACT)
     disputed = tuple(fact for fact in known if _has_any(fact.text, ("they say", "i disagree", "not true", "denied")))
     inferred = tuple(NarrativeFact(fact_id=f"INFERRED-{issue.issue_id}", text=f"The narrative may implicate {issue.label}.", category=EvidenceCategory.USER_INTERPRETATION, state=ResolutionState.INFERRED, materially_relevant=True) for issue in issues)
@@ -767,8 +818,64 @@ def build_research_intent(intake: NarrativeResearchIntake) -> ResearchIntent:
         urgency.append("custody_removal_possible")
     if _has_any(intake.narrative, ("arrest", "jail", "probation")):
         urgency.append("criminal_liberty_possible")
+
+    # Add P2L urgency cues and disambiguation questions
+    ontology = p2l_ontology or build_canonical_ontology()
+    for concept in ontology.match_narrative(intake.narrative):
+        for cue in concept.urgency_cues:
+            cue_lower = cue.lower()
+            if cue_lower not in urgency:
+                urgency.append(cue_lower)
+        if concept.subdomain == "EMERGENCY_REMOVAL" and "custody_removal_possible" not in urgency:
+            urgency.append("custody_removal_possible")
+        for dq in concept.disambiguation_questions:
+            if not any(c.question == dq for c in clarifications):
+                clarifications.append(
+                    ClarificationQuestion(
+                        question_id=_stable_id("CLARIFY-P2L", dq),
+                        question=dq,
+                        information_needed=f"Disambiguate {concept.preferred_label}",
+                        expected_research_impact="Determines whether statutory procedural protections or emergency review standards apply.",
+                        priority="HIGH" if any(k in dq.lower() for k in ("hearing", "deadline", "appeal", "emergency")) else "MEDIUM",
+                    )
+                )
+
     research_questions = tuple(ResearchQuestion(question_id=f"RQ-{index:03d}", issue_id=issue.issue_id, question=f"What law governs {issue.label} in the identified jurisdiction and procedural posture?", why_needed="Translate the hypothesis into a researchable question without treating it as a conclusion.") for index, issue in enumerate(issues, start=1))
-    sources = tuple(GoverningSourceCandidate(source_id=f"SOURCE-{index:03d}", description=f"Jurisdiction-specific statutes, rules, and opinions concerning {issue.label}.", source_kind="primary_authority", issue_id=issue.issue_id) for index, issue in enumerate(issues, start=1))
+
+    sources: list[GoverningSourceCandidate] = [
+        GoverningSourceCandidate(
+            source_id=f"SOURCE-{index:03d}",
+            description=f"Jurisdiction-specific statutes, rules, and opinions concerning {issue.label}.",
+            source_kind="primary_authority",
+            issue_id=issue.issue_id,
+        )
+        for index, issue in enumerate(issues, start=1)
+    ]
+    if jurisdiction.state.state == ResolutionState.KNOWN and jurisdiction.state.value:
+        registry = source_registry or build_canonical_registry()
+        lower_narrative = intake.narrative.lower()
+        federal_applicable = (
+            jurisdiction.state.value in {"US", "US-FED"}
+            or any("federal" in i.domain or "civil_rights" in i.subdomain or "icwa" in i.issue_id for i in issues)
+            or _has_any(lower_narrative, ("constitution", "civil rights", "1983", "icwa", "title iv-e", "federal"))
+        )
+        for reg_source in registry.resolve_candidate_sources(
+            jurisdiction.state.value,
+            include_federal_overlay=federal_applicable,
+        ):
+            sources.append(
+                GoverningSourceCandidate(
+                    source_id=reg_source.source_id,
+                    description=f"{reg_source.source_name} ({reg_source.provider_name})",
+                    source_kind=reg_source.authority_family.value.lower(),
+                    status=ResolutionState.INFERRED,
+                    official_status=reg_source.official_status.value,
+                    authority_level=reg_source.authority_level.value,
+                    currentness_capability=reg_source.currentness_capability.value,
+                )
+            )
+
+
     summary = "; ".join(issue.label for issue in issues)
     return ResearchIntent(
         intent_id=_stable_id("INTENT", intake.narrative),
@@ -784,7 +891,7 @@ def build_research_intent(intake: NarrativeResearchIntake) -> ResearchIntent:
         inferred_facts=inferred,
         unknown_facts=tuple(intake.unknown_or_ambiguous_facts),
         disputed_facts=disputed,
-        potential_governing_sources=sources,
+        potential_governing_sources=tuple(sources),
         research_questions=research_questions,
         clarifications_needed=tuple(clarifications),
         urgency_flags=tuple(urgency),
@@ -792,6 +899,7 @@ def build_research_intent(intake: NarrativeResearchIntake) -> ResearchIntent:
         research_constraints=("Do not treat a user label as a legal conclusion.", "Use the same authority corpus and verification standard for lay and professional modes.", "Send only abstract public-law terms to public providers."),
         source_narrative_sha256=intake.narrative_sha256,
     )
+
 
 
 def _query_variants(issue: IssueHypothesis, query_class: QueryClass) -> tuple[str, ...]:
@@ -853,9 +961,16 @@ def compile_research_plan(intent: ResearchIntent, *, plan_id: Optional[str] = No
     )
 
 
-def compile_narrative(narrative: str, *, intake_id: str = "LAY-INTAKE-001", plan_id: Optional[str] = None) -> CompiledNarrativeResearch:
+def compile_narrative(
+    narrative: str,
+    *,
+    intake_id: str = "LAY-INTAKE-001",
+    plan_id: Optional[str] = None,
+    p2l_ontology: Optional[PeopleToLawOntology] = None,
+    source_registry: Optional[JurisdictionSourceRegistry] = None,
+) -> CompiledNarrativeResearch:
     intake = extract_narrative_intake(narrative, intake_id=intake_id)
-    intent = build_research_intent(intake)
+    intent = build_research_intent(intake, p2l_ontology=p2l_ontology, source_registry=source_registry)
     plan = compile_research_plan(intent, plan_id=plan_id)
     quality = ResearchQualityAssessment(
         assessment_id=_stable_id("QUALITY", intake.intake_id), intent_id=intent.intent_id,

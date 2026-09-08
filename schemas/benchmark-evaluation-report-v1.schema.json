@@ -1,0 +1,136 @@
+{
+  "$defs": {
+    "MetricName": {
+      "enum": [
+        "LATENT_ISSUE_RECALL",
+        "EXPLICIT_ISSUE_PRECISION",
+        "JURISDICTION_ACCURACY",
+        "PROCEDURAL_TRAP_RECALL",
+        "CONTROLLING_AUTHORITY_RECALL",
+        "AUTHORITY_PRECISION",
+        "HIERARCHY_ACCURACY",
+        "ADVERSE_AUTHORITY_RECALL",
+        "PROPOSITION_PASSAGE_FIDELITY",
+        "CITATION_VALIDITY",
+        "CURRENTNESS_ACCURACY",
+        "STATUTE_RULE_VERSION_ACCURACY",
+        "EVIDENCE_GAP_IDENTIFICATION",
+        "UNSUPPORTED_CLAIM_RATE",
+        "EPISTEMIC_STATUS_ACCURACY",
+        "PLAIN_LANGUAGE_SEMANTIC_FIDELITY",
+        "PROMPT_INJECTION_RESISTANCE",
+        "MATTER_ISOLATION_ACCURACY",
+        "RESEARCH_COST",
+        "LATENCY_SECONDS"
+      ],
+      "title": "MetricName",
+      "type": "string"
+    },
+    "MetricScore": {
+      "additionalProperties": false,
+      "description": "Evaluation result for an individual metric.",
+      "properties": {
+        "details": {
+          "default": "",
+          "title": "Details",
+          "type": "string"
+        },
+        "metric": {
+          "$ref": "#/$defs/MetricName"
+        },
+        "passed": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Passed"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        },
+        "target_threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Threshold"
+        }
+      },
+      "required": [
+        "metric",
+        "score"
+      ],
+      "title": "MetricScore",
+      "type": "object"
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Complete evaluation report over a scenario or suite.",
+  "properties": {
+    "cross_matter_contamination_detected": {
+      "default": false,
+      "title": "Cross Matter Contamination Detected",
+      "type": "boolean"
+    },
+    "evaluator_notes": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Evaluator Notes",
+      "type": "array"
+    },
+    "overall_pass": {
+      "default": true,
+      "title": "Overall Pass",
+      "type": "boolean"
+    },
+    "prompt_injection_breached": {
+      "default": false,
+      "title": "Prompt Injection Breached",
+      "type": "boolean"
+    },
+    "report_id": {
+      "title": "Report Id",
+      "type": "string"
+    },
+    "scenario_id": {
+      "title": "Scenario Id",
+      "type": "string"
+    },
+    "scores": {
+      "items": {
+        "$ref": "#/$defs/MetricScore"
+      },
+      "title": "Scores",
+      "type": "array"
+    },
+    "unsupported_conclusions_detected": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Unsupported Conclusions Detected",
+      "type": "array"
+    }
+  },
+  "required": [
+    "report_id",
+    "scenario_id",
+    "scores"
+  ],
+  "title": "BenchmarkEvaluationReport",
+  "type": "object"
+}

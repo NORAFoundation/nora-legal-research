@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Multi-perspective stress-test results across advocate and opposing viewpoints.",
+  "properties": {
+    "advocate_arguments": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Advocate Arguments",
+      "type": "array"
+    },
+    "conflicts": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Conflicts",
+      "type": "array"
+    },
+    "evidence_needed": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Needed",
+      "type": "array"
+    },
+    "failed": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Failed",
+      "type": "array"
+    },
+    "opposition_arguments": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Opposition Arguments",
+      "type": "array"
+    },
+    "rebuttals": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Rebuttals",
+      "type": "array"
+    },
+    "research_needed": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Research Needed",
+      "type": "array"
+    },
+    "survived_conditionally": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Survived Conditionally",
+      "type": "array"
+    },
+    "survived_strongly": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Survived Strongly",
+      "type": "array"
+    },
+    "target_objective": {
+      "title": "Target Objective",
+      "type": "string"
+    },
+    "unresolved": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved",
+      "type": "array"
+    },
+    "wargame_id": {
+      "title": "Wargame Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "wargame_id",
+    "target_objective",
+    "advocate_arguments",
+    "opposition_arguments",
+    "conflicts",
+    "rebuttals"
+  ],
+  "title": "WarGameResult",
+  "type": "object"
+}

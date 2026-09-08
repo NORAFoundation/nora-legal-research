@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Audit receipt recording date and sources checked for temporal currency.",
+  "properties": {
+    "checked_through_date": {
+      "title": "Checked Through Date",
+      "type": "string"
+    },
+    "later_authorities": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Later Authorities",
+      "type": "array"
+    },
+    "receipt_id": {
+      "title": "Receipt Id",
+      "type": "string"
+    },
+    "sources_checked": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Sources Checked",
+      "type": "array"
+    },
+    "statutory_or_rule_changes": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Statutory Or Rule Changes",
+      "type": "array"
+    },
+    "treatment_candidates": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Treatment Candidates",
+      "type": "array"
+    },
+    "unresolved_uncertainty": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Uncertainty",
+      "type": "array"
+    }
+  },
+  "required": [
+    "receipt_id",
+    "checked_through_date",
+    "sources_checked"
+  ],
+  "title": "CurrentnessReceipt",
+  "type": "object"
+}

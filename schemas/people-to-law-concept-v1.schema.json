@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Structured representation of an ordinary-language lived problem family.",
+  "properties": {
+    "candidate_legal_issues": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Candidate Legal Issues",
+      "type": "array"
+    },
+    "concept_id": {
+      "title": "Concept Id",
+      "type": "string"
+    },
+    "disambiguation_questions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Disambiguation Questions",
+      "type": "array"
+    },
+    "domain": {
+      "default": "CHILD_WELFARE",
+      "title": "Domain",
+      "type": "string"
+    },
+    "factual_predicates": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Factual Predicates",
+      "type": "array"
+    },
+    "false_friend_terms": {
+      "items": {
+        "type": "string"
+      },
+      "title": "False Friend Terms",
+      "type": "array"
+    },
+    "governing_source_families": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Governing Source Families",
+      "type": "array"
+    },
+    "neighboring_concept_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Neighboring Concept Ids",
+      "type": "array"
+    },
+    "ordinary_language_aliases": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Ordinary Language Aliases",
+      "type": "array"
+    },
+    "preferred_label": {
+      "title": "Preferred Label",
+      "type": "string"
+    },
+    "procedural_significance": {
+      "title": "Procedural Significance",
+      "type": "string"
+    },
+    "procedure_or_substance": {
+      "title": "Procedure Or Substance",
+      "type": "string"
+    },
+    "subdomain": {
+      "title": "Subdomain",
+      "type": "string"
+    },
+    "urgency_cues": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Urgency Cues",
+      "type": "array"
+    },
+    "user_theory_nomination": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "User Theory Nomination"
+    },
+    "version": {
+      "default": "1.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "concept_id",
+    "preferred_label",
+    "ordinary_language_aliases",
+    "subdomain",
+    "procedure_or_substance",
+    "candidate_legal_issues",
+    "procedural_significance",
+    "urgency_cues",
+    "factual_predicates",
+    "disambiguation_questions",
+    "neighboring_concept_ids",
+    "governing_source_families",
+    "false_friend_terms"
+  ],
+  "title": "PeopleToLawConcept",
+  "type": "object"
+}
