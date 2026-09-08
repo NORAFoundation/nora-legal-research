@@ -79,6 +79,41 @@ from .research_quality import (
     assess_completeness,
     to_non_lawyer_explanation,
 )
+from .jurisdiction_registry import (
+    AuthorityFamily,
+    AuthorityLevel,
+    CoverageStatus,
+    GeographicScope,
+    JurisdictionSourceRegistry,
+    LegalDomain,
+    OfficialStatus,
+    SourceDefinition,
+)
+from .jurisdiction_data import build_canonical_registry
+from .people_to_law import (
+    CANONICAL_CHILD_WELFARE_CONCEPTS,
+    PeopleToLawConcept,
+    PeopleToLawOntology,
+    build_canonical_ontology,
+)
+from .bench.models import BenchmarkDocument, BenchmarkScenario
+from .bench.metrics import BenchmarkEvaluationReport, MetricName, MetricScore
+from .bench.evaluator import DeterministicBenchEvaluator
+from .bench.corpus import CANONICAL_BENCHMARK_SCENARIOS, get_canonical_scenarios
+from .canonical_research import (
+    AuthorityFirewallClassification,
+    AuthorityQualificationLifecycle,
+    AuthorityQualificationState,
+    CurrentnessReceipt,
+    LegalProposition,
+    LegalTheory,
+    LegalTheoryState,
+    MatterScope,
+    ProceduralAlert,
+    ResearchCoverage,
+    ResearchPackage,
+    WarGameResult,
+)
 
 __all__ = [
     "AuthorityScore",
@@ -166,5 +201,38 @@ __all__ = [
     "serialize_provider_request",
     "canonical_query_plan",
     "query_plan_hash",
+    "AuthorityFamily",
+    "AuthorityLevel",
+    "CoverageStatus",
+    "GeographicScope",
+    "JurisdictionSourceRegistry",
+    "LegalDomain",
+    "OfficialStatus",
+    "SourceDefinition",
+    "build_canonical_registry",
+    "PeopleToLawConcept",
+    "PeopleToLawOntology",
+    "CANONICAL_CHILD_WELFARE_CONCEPTS",
+    "build_canonical_ontology",
+    "BenchmarkDocument",
+    "BenchmarkScenario",
+    "BenchmarkEvaluationReport",
+    "MetricName",
+    "MetricScore",
+    "DeterministicBenchEvaluator",
+    "CANONICAL_BENCHMARK_SCENARIOS",
+    "get_canonical_scenarios",
+    "AuthorityFirewallClassification",
+    "AuthorityQualificationLifecycle",
+    "AuthorityQualificationState",
+    "CurrentnessReceipt",
+    "LegalProposition",
+    "LegalTheory",
+    "LegalTheoryState",
+    "MatterScope",
+    "ProceduralAlert",
+    "ResearchCoverage",
+    "ResearchPackage",
+    "WarGameResult",
 ]
 __version__ = "0.0.1"

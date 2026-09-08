@@ -12,6 +12,20 @@ from nora_legal_research.narrative_compiler import (
     ResearchPlan,
     ResearchQualityAssessment,
 )
+from nora_legal_research.bench.metrics import BenchmarkEvaluationReport
+from nora_legal_research.bench.models import BenchmarkScenario
+from nora_legal_research.canonical_research import (
+    AuthorityQualificationLifecycle,
+    CurrentnessReceipt,
+    LegalProposition,
+    LegalTheory,
+    ProceduralAlert,
+    ResearchCoverage,
+    ResearchPackage,
+    WarGameResult,
+)
+from nora_legal_research.jurisdiction_registry import JurisdictionSourceRegistry, SourceDefinition
+from nora_legal_research.people_to_law import PeopleToLawConcept, PeopleToLawOntology
 from nora_legal_research.provider_contract import AuthorityResearchRequest, ProviderSearchResponseModel
 from nora_legal_research.providers import ProviderSearchResult
 from nora_legal_research.research_quality import (
@@ -41,6 +55,20 @@ SCHEMAS = {
     "source-evidence-v1.schema.json": SourceEvidence,
     "professional-research-record-v1.schema.json": ProfessionalResearchRecord,
     "non-lawyer-guided-explanation-v1.schema.json": NonLawyerGuidedExplanation,
+    "jurisdiction-source-registry-v1.schema.json": JurisdictionSourceRegistry,
+    "source-definition-v1.schema.json": SourceDefinition,
+    "people-to-law-ontology-v1.schema.json": PeopleToLawOntology,
+    "people-to-law-concept-v1.schema.json": PeopleToLawConcept,
+    "benchmark-scenario-v1.schema.json": BenchmarkScenario,
+    "benchmark-evaluation-report-v1.schema.json": BenchmarkEvaluationReport,
+    "procedural-alert-v1.schema.json": ProceduralAlert,
+    "legal-theory-v1.schema.json": LegalTheory,
+    "authority-qualification-lifecycle-v1.schema.json": AuthorityQualificationLifecycle,
+    "legal-proposition-v1.schema.json": LegalProposition,
+    "currentness-receipt-v1.schema.json": CurrentnessReceipt,
+    "research-coverage-v1.schema.json": ResearchCoverage,
+    "wargame-result-v1.schema.json": WarGameResult,
+    "research-package-v1.schema.json": ResearchPackage,
 }
 
 
